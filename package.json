@@ -13,5 +13,9 @@
   },
   "devDependencies": {
     "standard": "^17.1.0"
-  }
+  },
+  "main": "vite.config.js",
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }

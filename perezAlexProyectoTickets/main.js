@@ -16,6 +16,9 @@ function cargarRegistro(){
   event.preventDefault();
   document.querySelector('main').innerHTML = registro.template
   registro.script()
+  document.getElementById("botonLogin").className = " btn btn-secondary ms-2";
+  document.getElementById("botonRegistro").className = "d-none";
+  document.getElementById("botonPanel").className = "btn btn-secondary ms-2";
 }
 
 const botonLogin = document.querySelector("#botonLogin");
@@ -31,10 +34,13 @@ function cargarLogin(){
 }
 const botonPanel = document.querySelector("#botonPanel");
 botonPanel.addEventListener("click", cargarPanel);
-
+document.getElementById("botonPanel").className = "d-none";
 function cargarPanel(){
   event.preventDefault();
   document.querySelector('main').innerHTML = panel.template
   panel.script()
+  document.getElementById("botonLogin").className = " btn btn-secondary ms-2";
+  document.getElementById("botonRegistro").className = "btn btn-secondary ms-2";
+  document.getElementById("botonPanel").className = "d-none";
 }
 

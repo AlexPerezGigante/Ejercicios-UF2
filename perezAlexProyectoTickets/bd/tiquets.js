@@ -8,7 +8,7 @@ export const tiquets = [
     ordenador: 'PC3',
     descripcion: 'Error de impresora',
     alumno: 'Ana Martínez',
-    estado: 0
+    estado: 'pendiente'
  },
  {
     codigo: 123460,
@@ -19,7 +19,7 @@ export const tiquets = [
     ordenador: 'PC4',
     descripcion: 'Problema de acceso a archivos',
     alumno: 'Pedro Gómez',
-    estado: 0
+    estado: 'pendiente'
  },
  {
     codigo: 123461,
@@ -30,7 +30,7 @@ export const tiquets = [
     ordenador: 'PC1',
     descripcion: 'Aplicación se cierra inesperadamente',
     alumno: 'Sofía Fernández',
-    estado: 0
+    estado: 'pendiente'
  },
  {
     codigo: 123462,
@@ -41,7 +41,7 @@ export const tiquets = [
     ordenador: 'PC2',
     descripcion: 'Problema de conexión a la red',
     alumno: 'Luis Torres',
-    estado: 0
+    estado: 'pendiente'
  },
  {
     codigo: 123463,
@@ -52,7 +52,7 @@ export const tiquets = [
     ordenador: 'PC3',
     descripcion: 'Archivos corruptos',
     alumno: 'Carolina Ramírez',
-    estado: 0
+    estado: 'pendiente'
  },
  {
     codigo: 123457,
@@ -63,7 +63,7 @@ export const tiquets = [
     ordenador: 'PC1',
     descripcion: 'Problema de conexión a Internet',
     alumno: 'Maria López',
-    estado: 1
+    estado: 'resuelto'
  },
  {
     codigo: 123458,
@@ -74,7 +74,7 @@ export const tiquets = [
     ordenador: 'PC2',
     descripcion: 'Pantalla en blanco',
     alumno: 'Juan Rodríguez',
-    estado: 1
+    estado: 'resuelto'
  },
  {
     codigo: 123459,
@@ -85,6 +85,6 @@ export const tiquets = [
     ordenador: 'PC3',
     descripcion: 'Error de impresora',
     alumno: 'Ana Martínez',
-    estado: 1
- }
+    estado: 'resuelto'
+ },
 ]

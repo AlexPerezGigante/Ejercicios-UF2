@@ -3,6 +3,7 @@ import { panel } from "./vistas/panel.js";
 import { registro } from "./vistas/registre.js";
 import { login } from "./vistas/login.js";
 import { header } from "./vistas/header.js";
+import { usuaris } from "./bd/usuaris.js";
 
 document.querySelector('header').innerHTML = header.template
 header.script()
@@ -44,3 +45,8 @@ function cargarPanel(){
   document.getElementById("botonPanel").className = "d-none";
 }
 
+function lsSetDades(dades){
+	const tetris_Dades = JSON.stringify(dades)
+	localStorage.setItem('tetris_Dades', tetris_Dades)
+	return(true)
+}

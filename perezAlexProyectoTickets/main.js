@@ -51,8 +51,10 @@ function cargarLogin(){
 }
 
 function iniciarSesion(){
-  login.script()
-  
+  const log=login.script()
+  if(log==1){
+    cargarPanel()
+  }
   
 }
 

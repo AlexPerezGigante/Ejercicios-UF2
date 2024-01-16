@@ -43,7 +43,7 @@ export const login = {
         usuaris.forEach(element => {
             if(email == element.email){
                 if(pass == element.password){
-                    html+=inputEmail.value
+                    html+=email
                     html+="</span>"
                     document.querySelector("#correo").innerHTML=html
                     error=0
@@ -52,6 +52,11 @@ export const login = {
         });
         if(error==1){
             alert("Correo o contraseña erronea!")
+            return(0)
+        }
+        else{
+            alert("Bienvenido " + email)
+            return(1)
         }
         
             

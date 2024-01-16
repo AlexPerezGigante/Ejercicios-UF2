@@ -21,6 +21,7 @@ function cargarRegistro(){
   document.getElementById("botonLogin").className = " btn btn-secondary ms-2";
   document.getElementById("botonRegistro").className = "d-none";
   document.getElementById("botonPanel").className = "d-none";
+  document.getElementById("botonCerrarSesion").className =  "d-none";
   
   const botonEnviarRegistro = document.querySelector("#botonEnviarRegistro");
   botonEnviarRegistro.addEventListener("click", registrarUsuario);
@@ -45,6 +46,7 @@ function cargarLogin(){
   document.getElementById("botonLogin").className = "d-none";
   document.getElementById("botonRegistro").className = "btn btn-secondary ms-2";
   document.getElementById("botonPanel").className = "d-none";
+  document.getElementById("botonCerrarSesion").className =  "d-none";
 
   const botonIniciar = document.querySelector("#botonIniciar");
   botonIniciar.addEventListener("click", iniciarSesion);
@@ -68,6 +70,7 @@ function cargarPanel(){
   document.getElementById("botonLogin").className = " btn btn-secondary ms-2";
   document.getElementById("botonRegistro").className = "btn btn-secondary ms-2";
   document.getElementById("botonPanel").className = "d-none";
+  document.getElementById("botonCerrarSesion").className =  "btn btn-secondary ms-2";
 }
 
 lsSetDades(usuaris)
@@ -78,3 +81,12 @@ function lsSetDades(dades){
 	return(true)
 }
 
+const botonCerrarSesion = document.querySelector("#botonCerrarSesion");
+botonCerrarSesion.addEventListener("click", cerrarSesion);
+
+function cerrarSesion(){
+  const mail="<span>administrador@fpllefia.com</span>"
+  document.querySelector("#correo").innerHTML=mail
+  alert("Sesión cerrada correctamente!")
+  cargarLogin()
+}

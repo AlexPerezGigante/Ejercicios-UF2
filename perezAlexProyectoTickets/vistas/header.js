@@ -10,6 +10,7 @@ export const header = {
         <button id="botonPanel" class="btn btn-secondary ms-2">PANEL</button>
         <button id="botonLogin" class="btn btn-secondary ms-2">LOGIN</button>
         <button id="botonRegistro" class="btn btn-secondary ms-2">REGISTRO</button>
+        <button id="botonCerrarSesion" class="d-none">CERRAR SESIÓN</button>
       </div>
       <div id="correo">
         <span>administrador@fpllefia.com</span>

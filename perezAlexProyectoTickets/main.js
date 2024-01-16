@@ -25,11 +25,14 @@ function cargarRegistro(){
   const botonEnviarRegistro = document.querySelector("#botonEnviarRegistro");
   botonEnviarRegistro.addEventListener("click", registrarUsuario);
 
+  
+
 }
 
 function registrarUsuario(){
   registro.script()
   lsSetDades(usuaris)
+  cargarLogin()
 }
 
 const botonLogin = document.querySelector("#botonLogin");

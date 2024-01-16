@@ -29,7 +29,7 @@ export const registro = {
             email: inputEmail.value ,
             password: inputPass.value
         }
-
+        
         registrarUsuario(registro)
         // Esta función recibe un objeto, lee el localStorage, agrega un registro al objeto JSON del localStorage y lo vueve a subir al localStorage
         function registrarUsuario(usuario){
@@ -37,6 +37,7 @@ export const registro = {
             usuaris.push(usuario)
         }
 
+        alert("Usuario "+ inputEmail.value + " creado correctamente! ")
         
     }
     

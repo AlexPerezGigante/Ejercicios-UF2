@@ -20,7 +20,7 @@ function cargarRegistro(){
   
   document.getElementById("botonLogin").className = " btn btn-secondary ms-2";
   document.getElementById("botonRegistro").className = "d-none";
-  document.getElementById("botonPanel").className = "btn btn-secondary ms-2";
+  document.getElementById("botonPanel").className = "d-none";
   
   const botonEnviarRegistro = document.querySelector("#botonEnviarRegistro");
   botonEnviarRegistro.addEventListener("click", registrarUsuario);
@@ -44,7 +44,7 @@ function cargarLogin(){
   
   document.getElementById("botonLogin").className = "d-none";
   document.getElementById("botonRegistro").className = "btn btn-secondary ms-2";
-  document.getElementById("botonPanel").className = "btn btn-secondary ms-2";
+  document.getElementById("botonPanel").className = "d-none";
 
   const botonIniciar = document.querySelector("#botonIniciar");
   botonIniciar.addEventListener("click", iniciarSesion);

@@ -15,30 +15,35 @@ export const registro = {
                         <input id="email" type="text" class="form-control" />
                         <label for="pass" class="form-label mt-3">Contraseña:</label>
                         <input id="pass" type="password" class="form-control" />
-                        <button class="btn btn-primary w-100 mt-3" id="botonEnviarRegistro" >Enviar</button>
+                        <button type="button" class="btn btn-primary w-100 mt-3" id="botonEnviarRegistro" >Enviar</button>
                     </form>
                 </div>
             </div>
     `,
     script: () => {
         
-        const botonRegistro = document.querySelector("#botonEnviarRegistro");
-        botonRegistro.addEventListener("click", cargarRegistro);
+        const inputEmail = document.querySelector("#email");
+        // const email = inputEmail.value;
+        const inputPass = document.querySelector("#pass");
+        // const apellido1 = inputApellido1.value;
 
-        // Esta función agrega a localStorage un objeto.
-        function lsSetDades(dades){
-            const datosUsuario= JSON.stringify(dades)
-            localStorage.setItem('datos', datosUsuario)
-            return(true)
+        const registro = {
+            email: inputEmail.value ,
+            password: inputPass.value
         }
+
+       
+
+        const botonEnviarRegistro = document.querySelector("#botonEnviarRegistro");
+        botonEnviarRegistro.addEventListener("click", registrarUsuario(registro));
+
         // Esta función recibe un objeto, lee el localStorage, agrega un registro al objeto JSON del localStorage y lo vueve a subir al localStorage
-        function registraUsuario(usuario){
-            const textoLocal = localStorage.getItem('datosUsuario')
-            const dades = JSON.parse(textoLocal)
-            dades.push(usuario)
-            const datosUsuario = JSON.stringify(dades)
-            localStorage.setItem('datosUsuario', datosUsuario)
+        function registrarUsuario(usuario){
+            console.log("insertar usuario: ", usuario)
+            usuaris.push(usuario)
         }
+
+        
     }
     
 }

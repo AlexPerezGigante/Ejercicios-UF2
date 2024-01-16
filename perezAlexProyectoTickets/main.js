@@ -17,10 +17,12 @@ botonRegistro.addEventListener("click", cargarRegistro);
 function cargarRegistro(){
   event.preventDefault();
   document.querySelector('main').innerHTML = registro.template
-  registro.script()
+  
   document.getElementById("botonLogin").className = " btn btn-secondary ms-2";
   document.getElementById("botonRegistro").className = "d-none";
   document.getElementById("botonPanel").className = "btn btn-secondary ms-2";
+  
+  
 }
 
 const botonLogin = document.querySelector("#botonLogin");
@@ -53,3 +55,4 @@ function lsSetDades(dades){
 	localStorage.setItem('datosUsuario', datosUsuario)
 	return(true)
 }
+

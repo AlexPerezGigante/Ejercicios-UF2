@@ -41,11 +41,21 @@ botonLogin.addEventListener("click", cargarLogin);
 function cargarLogin(){
   event.preventDefault();
   document.querySelector('main').innerHTML = login.template
-  login.script()
+  
   document.getElementById("botonLogin").className = "d-none";
   document.getElementById("botonRegistro").className = "btn btn-secondary ms-2";
   document.getElementById("botonPanel").className = "btn btn-secondary ms-2";
+
+  const botonIniciar = document.querySelector("#botonIniciar");
+  botonIniciar.addEventListener("click", iniciarSesion);
 }
+
+function iniciarSesion(){
+  login.script()
+  
+  
+}
+
 const botonPanel = document.querySelector("#botonPanel");
 botonPanel.addEventListener("click", cargarPanel);
 document.getElementById("botonPanel").className = "d-none";

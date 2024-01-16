@@ -5,6 +5,7 @@ import { login } from "./vistas/login.js";
 import { header } from "./vistas/header.js";
 import { usuaris } from "./bd/usuaris.js";
 
+
 document.querySelector('header').innerHTML = header.template
 header.script()
 document.querySelector('main').innerHTML = panel.template
@@ -45,8 +46,10 @@ function cargarPanel(){
   document.getElementById("botonPanel").className = "d-none";
 }
 
+lsSetDades(usuaris)
+
 function lsSetDades(dades){
-	const tetris_Dades = JSON.stringify(dades)
-	localStorage.setItem('tetris_Dades', tetris_Dades)
+	const datosUsuario = JSON.stringify(dades)
+	localStorage.setItem('datosUsuario', datosUsuario)
 	return(true)
 }

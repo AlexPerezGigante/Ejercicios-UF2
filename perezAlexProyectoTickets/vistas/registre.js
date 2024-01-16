@@ -1,3 +1,5 @@
+import { usuaris } from "../bd/usuaris.js";
+
 export const registro = {
     template://html 
     `
@@ -13,13 +15,30 @@ export const registro = {
                         <input id="email" type="text" class="form-control" />
                         <label for="pass" class="form-label mt-3">Contraseña:</label>
                         <input id="pass" type="password" class="form-control" />
-                        <a class="btn btn-primary w-100 mt-3" href="#">Enviar</a>
+                        <button class="btn btn-primary w-100 mt-3" id="botonEnviarRegistro" >Enviar</button>
                     </form>
                 </div>
             </div>
     `,
     script: () => {
-        console.log("inyectamos registro")
+        
+        const botonRegistro = document.querySelector("#botonEnviarRegistro");
+        botonRegistro.addEventListener("click", cargarRegistro);
+
+        // Esta función agrega a localStorage un objeto.
+        function lsSetDades(dades){
+            const datosUsuario= JSON.stringify(dades)
+            localStorage.setItem('datos', datosUsuario)
+            return(true)
+        }
+        // Esta función recibe un objeto, lee el localStorage, agrega un registro al objeto JSON del localStorage y lo vueve a subir al localStorage
+        function registraUsuario(usuario){
+            const textoLocal = localStorage.getItem('datosUsuario')
+            const dades = JSON.parse(textoLocal)
+            dades.push(usuario)
+            const datosUsuario = JSON.stringify(dades)
+            localStorage.setItem('datosUsuario', datosUsuario)
+        }
     }
     
 }

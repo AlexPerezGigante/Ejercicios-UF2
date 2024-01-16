@@ -22,7 +22,7 @@ export const login = {
                             </label>
                         </div>
                         <a class="d-block text-end" href="#">¿Has olvidado tu contraseña?</a>
-                        <a class="btn btn-primary w-100 mt-3" href="#">Iniciar sesión</a>
+                        <button class="btn btn-primary w-100 mt-3" id="botonIniciar" href="#">Iniciar sesión</button>
                     </form>
                     <a class="d-block mt-5 btn btn-secondary mx-auto" href="#"
                         >¿Eres nuevo? Regístrate</a
@@ -32,5 +32,12 @@ export const login = {
     `,
     script: () => {
         console.log('Inyectamos login')
+
+        // Esta función agrega a localStorage un objeto.
+        function lsSetDades(dades){
+            const datosUsuario= JSON.stringify(dades)
+            localStorage.setItem('datos', datosUsuario)
+            return(true)
+        }
     }
 }

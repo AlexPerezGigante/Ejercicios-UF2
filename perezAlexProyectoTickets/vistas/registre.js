@@ -23,20 +23,14 @@ export const registro = {
     script: () => {
         
         const inputEmail = document.querySelector("#email");
-        // const email = inputEmail.value;
         const inputPass = document.querySelector("#pass");
-        // const apellido1 = inputApellido1.value;
-
+       
         const registro = {
             email: inputEmail.value ,
             password: inputPass.value
         }
 
-       
-
-        const botonEnviarRegistro = document.querySelector("#botonEnviarRegistro");
-        botonEnviarRegistro.addEventListener("click", registrarUsuario(registro));
-
+        registrarUsuario(registro)
         // Esta función recibe un objeto, lee el localStorage, agrega un registro al objeto JSON del localStorage y lo vueve a subir al localStorage
         function registrarUsuario(usuario){
             console.log("insertar usuario: ", usuario)

@@ -22,7 +22,14 @@ function cargarRegistro(){
   document.getElementById("botonRegistro").className = "d-none";
   document.getElementById("botonPanel").className = "btn btn-secondary ms-2";
   
-  
+  const botonEnviarRegistro = document.querySelector("#botonEnviarRegistro");
+  botonEnviarRegistro.addEventListener("click", registrarUsuario);
+
+}
+
+function registrarUsuario(){
+  registro.script()
+  lsSetDades(usuaris)
 }
 
 const botonLogin = document.querySelector("#botonLogin");

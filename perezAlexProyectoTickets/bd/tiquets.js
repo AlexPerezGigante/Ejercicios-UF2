@@ -1,4 +1,4 @@
-export const tiquets = [
+let tiquets = [
  {
     codigo: 123459,
     fechaCreado: '18/04/2023',
@@ -19,7 +19,7 @@ export const tiquets = [
     ordenador: 'PC4',
     descripcion: 'Problema de acceso a archivos',
     alumno: 'Pedro Gómez',
-    estado: 'pendiente'
+    estado: 'pendiente',
  },
  {
     codigo: 123461,
@@ -88,3 +88,11 @@ export const tiquets = [
     estado: 'resuelto'
  },
 ]
+
+export function setTiquets(array){
+   tiquets=array
+}
+
+export function getTiquets(){
+   return tiquets
+}

@@ -116,6 +116,7 @@ export const panel = {
 
         document.querySelector('body').addEventListener('click', (e) =>{
             // borrar tarea
+            
             const tiquets = getTiquets()
             if(e.target.classList.contains('botonBorrar')){
                 // console.log('borrar tarea', e.target.classList)

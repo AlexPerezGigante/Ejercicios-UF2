@@ -85,7 +85,7 @@ const botonCerrarSesion = document.querySelector("#botonCerrarSesion");
 botonCerrarSesion.addEventListener("click", cerrarSesion);
 
 function cerrarSesion(){
-  const mail="<span>administrador@fpllefia.com</span>"
+  const mail="administrador@fpllefia.com"
   document.querySelector("#correo").innerHTML=mail
   alert("Sesión cerrada correctamente!")
   cargarLogin()

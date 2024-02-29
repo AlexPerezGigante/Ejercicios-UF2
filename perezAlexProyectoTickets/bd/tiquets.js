@@ -77,7 +77,7 @@ let tiquets = [
     estado: 'resuelto'
  },
  {
-    codigo: 123459,
+    codigo: 123456,
     fechaCreado: '18/04/2023',
     fechaResuelto: '15/05/2023',
     aula: 'T8',
@@ -95,4 +95,18 @@ export function setTiquets(array){
 
 export function getTiquets(){
    return tiquets
+}
+
+// Esta función agrega a localStorage un objeto.
+export function lsSetDades(dades){
+	const tickets = JSON.stringify(dades)
+	localStorage.setItem('tickets_Dades', tickets)
+	return(true)
+}
+
+// Esta función lee el localStorage devuelve un onbjeto JSON
+export function lsGetDades(){
+	const textoLocal = localStorage.getItem('tickets_Dades')
+	const dades = JSON.parse(textoLocal)
+	return(dades)
 }

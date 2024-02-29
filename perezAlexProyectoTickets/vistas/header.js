@@ -12,8 +12,8 @@ export const header = {
         <button id="botonRegistro" class="btn btn-secondary ms-2">REGISTRO</button>
         <button id="botonCerrarSesion" class="d-none">CERRAR SESIÓN</button>
       </div>
-      <div id="correo">
-        <span>administrador@fpllefia.com</span>
+      <div>
+        <span  id="correo">administrador@fpllefia.com</span>
       </div>
     </div>
   </nav>`,

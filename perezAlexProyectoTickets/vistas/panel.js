@@ -1,4 +1,5 @@
-import { setTiquets, getTiquets } from "../bd/tiquets.js"
+import { setTiquets ,getTiquets, lsSetDades, lsGetDades  } from "../bd/tiquets.js"
+import { comentarios } from "./comentarios.js"
 let html=''
 
 html+= `
@@ -50,12 +51,13 @@ export const panel = {
     ,
     script: () =>{
 
+        lsSetDades(getTiquets())
         pintaTiquetsPendientes()
         pintaTiquetsResueltos()
 
         function pintaTiquetsPendientes(){
             let html = ''
-            const tiquets = getTiquets()
+            const tiquets = lsGetDades()
             tiquets.forEach((element) => {
                 if(element.estado=='pendiente'){
                     html +=`
@@ -86,7 +88,7 @@ export const panel = {
 
         function pintaTiquetsResueltos(){
             let html = ''
-            const tiquets = getTiquets()
+            const tiquets = lsGetDades()
             tiquets.forEach((element) => {
                 if(element.estado=='resuelto'){
                     html+=`
@@ -117,7 +119,7 @@ export const panel = {
         document.querySelector('body').addEventListener('click', (e) =>{
             // borrar tarea
             
-            const tiquets = getTiquets()
+            const tiquets = lsGetDades()
             if(e.target.classList.contains('botonBorrar')){
                 // console.log('borrar tarea', e.target.classList)
                 // const divTarea = e.target.dataset.incidenciaid
@@ -128,6 +130,7 @@ export const panel = {
         
                 const bdElementoBorrado = tiquets.filter((item)=>item.codigo != idTarea)
                 console.log(bdElementoBorrado)
+                lsSetDades(bdElementoBorrado)
                 setTiquets(bdElementoBorrado)
                 pintaTiquetsPendientes()
                 pintaTiquetsResueltos()
@@ -148,6 +151,18 @@ export const panel = {
                 // datosBd=bdElementoBorrado
         
             }
+            if(e.target.classList.contains('botonComentario')){
+                const idTarea = e.target.dataset.incidenciaid
+                // const bdElementoEditado = datosBd.filter((item)=>item.id == idTarea)
+                document.querySelector('main').innerHTML = comentarios.template
+                console.log(idTarea)
+                comentarios.script(idTarea)
+        
+        
+                // pintarTareasPendientes(bdElementoBorrado)
+                // datosBd=bdElementoBorrado
+        
+            }
             if(e.target.classList.contains('botonResolver')){
                 const idTarea = e.target.dataset.incidenciaid
                  console.log('tareaId', idTarea)
@@ -158,6 +173,7 @@ export const panel = {
                     }
                 });
                 
+                lsSetDades(tiquets)
                 setTiquets(tiquets)
                 pintaTiquetsPendientes()
                 pintaTiquetsResueltos()

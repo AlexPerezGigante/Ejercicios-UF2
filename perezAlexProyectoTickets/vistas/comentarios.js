@@ -1,6 +1,7 @@
 import { setComentarios, getComentarios, lsSetDades, lsGetDades } from "../bd/comentarios"
 import { panel } from "./panel"
 
+
 let html = ''
 
 html += `
@@ -60,8 +61,12 @@ export const comentarios = {
 
         }
 
+        
+
         document.querySelector('body').addEventListener('click', (e) =>{
+            
             if(e.target.classList.contains('botonVolver')){
+                event.preventDefault()
                 document.querySelector('main').innerHTML = panel.template
                 panel.script()
             }
@@ -73,9 +78,21 @@ export const comentarios = {
                 fecha = fecha[0].split('-')
                 fecha = fecha[2] + '/' + fecha[1] + '/' + fecha[0]
 
-                let autor = document.querySelector('#correo').innerText
-                autor = autor.split('@')
-                autor = autor[0]
+                let correo = document.querySelector('#correo').innerText
+
+                const usuarios = lsGetUsuarios()
+                
+                function lsGetUsuarios(){
+                  const textoLocal = localStorage.getItem('usuaris_Dades')
+                  const dades = JSON.parse(textoLocal)
+                  return(dades)
+              }
+              
+              const bdElemento = usuarios.filter((item)=>item.email == correo)
+
+              const autor = bdElemento[0].nombre
+
+              
 
                 const comentario = document.querySelector('.inputComentario').value
 

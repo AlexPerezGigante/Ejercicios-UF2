@@ -3,7 +3,9 @@ import { panel } from "./vistas/panel.js";
 import { registro } from "./vistas/registre.js";
 import { login } from "./vistas/login.js";
 import { header } from "./vistas/header.js";
-import { usuaris } from "./bd/usuaris.js";
+import { setUsuaris, getUsuaris, lsGetDades, lsSetDades } from "./bd/usuaris.js";
+
+
 
 
 document.querySelector('header').innerHTML = header.template
@@ -13,6 +15,8 @@ panel.script()
 
 const botonRegistro = document.querySelector("#botonRegistro");
 botonRegistro.addEventListener("click", cargarRegistro);
+
+lsSetDades(getUsuaris())
 
 function cargarRegistro(){
   event.preventDefault();
@@ -32,7 +36,6 @@ function cargarRegistro(){
 
 function registrarUsuario(){
   registro.script()
-  lsSetDades(usuaris)
   cargarLogin()
 }
 
@@ -73,13 +76,8 @@ function cargarPanel(){
   document.getElementById("botonCerrarSesion").className =  "btn btn-secondary ms-2";
 }
 
-lsSetDades(usuaris)
 
-function lsSetDades(dades){
-	const datosUsuario = JSON.stringify(dades)
-	localStorage.setItem('datosUsuario', datosUsuario)
-	return(true)
-}
+
 
 const botonCerrarSesion = document.querySelector("#botonCerrarSesion");
 botonCerrarSesion.addEventListener("click", cerrarSesion);

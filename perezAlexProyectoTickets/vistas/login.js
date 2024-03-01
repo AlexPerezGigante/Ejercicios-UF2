@@ -1,4 +1,4 @@
-import { usuaris } from "../bd/usuaris";
+import { lsGetDades } from "../bd/usuaris";
 export const login = {
     template: //html
     `
@@ -33,31 +33,34 @@ export const login = {
     `,
     script: () => {
         console.log('Inyectamos login')
-
-        const inputEmail = document.querySelector("#email");
-        const email= inputEmail.value
-        const inputPass = document.querySelector("#pass");
-        const pass=inputPass.value
-        let html="<span>"
-        let error=1
-        usuaris.forEach(element => {
-            if(email == element.email){
-                if(pass == element.password){
-                    html+=email
-                    html+="</span>"
-                    document.querySelector("#correo").innerHTML=html
-                    error=0
+        
+       
+            const inputEmail = document.querySelector("#email");
+            const email= inputEmail.value
+            const inputPass = document.querySelector("#pass");
+            const pass=inputPass.value
+            let html=''
+            let error=1
+            lsGetDades().forEach(element => {
+                if(email == element.email){
+                    if(pass == element.password){
+                        html+=email
+                        document.querySelector("#correo").innerHTML=html
+                        error=0
+                    }
                 }
+            });
+            if(error==1){
+                alert("Correo o contraseña erronea!")
+                return(0)
             }
-        });
-        if(error==1){
-            alert("Correo o contraseña erronea!")
-            return(0)
-        }
-        else{
-            alert("Bienvenido " + email)
-            return(1)
-        }
+            else{
+                alert("Bienvenido " + email)
+                return(1)
+            }
+        
+
+       
         
             
         

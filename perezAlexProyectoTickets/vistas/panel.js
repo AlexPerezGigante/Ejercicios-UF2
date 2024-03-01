@@ -205,7 +205,37 @@ export const panel = {
                     date = date[0].split('-')
                     date = date[2] + '/' + date[1] + '/' + date[0]
                     
-                    
+                    const id = elemento[0].codigo
+
+                    const aula = document.querySelector('.aula').value
+                    const grupo = document.querySelector('.grupo').value
+                    const ordenador = document.querySelector('.ordenador').value
+                    const descripcion = document.querySelector('.descripcion').value
+                    const alumno = document.querySelector('.alumno').value
+
+                    const obj = {
+                        
+                            codigo: id,
+                            fechaCreado: date,
+                            fechaResuelto: '',
+                            aula: aula.toUpperCase(),
+                            grupo: grupo.toUpperCase(),
+                            ordenador: ordenador.toUpperCase(),
+                            descripcion: descripcion,
+                            alumno: alumno,
+                            estado: 'pendiente'  
+                    }
+                    const bdElementoBorrado = tiquets.filter((item)=>item.codigo != id)
+
+                    bdElementoBorrado.push(obj)
+
+                    lsSetDades(bdElementoBorrado)
+                    setTiquets(bdElementoBorrado)
+                    pintaTiquetsPendientes()
+                    pintaTiquetsResueltos()
+
+
+
 
                     modal.hide()
                     
@@ -221,6 +251,7 @@ export const panel = {
             if(e.target.classList.contains('botonComentario')){
                 const idTarea = e.target.dataset.incidenciaid
                 // const bdElementoEditado = datosBd.filter((item)=>item.id == idTarea)
+                
                 document.querySelector('main').innerHTML = comentarios.template
                 console.log(idTarea)
                 comentarios.script(idTarea)
@@ -233,7 +264,12 @@ export const panel = {
             if(e.target.classList.contains('botonResolver')){
                 const idTarea = e.target.dataset.incidenciaid
                  console.log('tareaId', idTarea)
-        
+                
+                 let date = Date.now()
+                 
+
+                 console.log(date)
+
                 tiquets.forEach(element => {
                     if(element.codigo==idTarea){
                         element.estado='resuelto'

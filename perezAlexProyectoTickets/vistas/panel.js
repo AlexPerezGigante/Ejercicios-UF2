@@ -284,10 +284,14 @@ export const panel = {
                 pintaTiquetsResueltos()
             }
         }
+        document.querySelector('#botonLogin').addEventListener('click', quitarEvento)
+        document.querySelector('#botonRegistro').addEventListener('click', quitarEvento)
+        document.querySelector('#botonCerrarSesion').addEventListener('click', quitarEvento)
 
         quitarEvento()
-        quitarEvento()
         ponerEvento()
+
+        
 
         function quitarEvento(){
             eventoBody.removeEventListener('click', funcion)

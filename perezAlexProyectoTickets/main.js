@@ -16,6 +16,9 @@ panel.script()
 const botonRegistro = document.querySelector("#botonRegistro");
 botonRegistro.addEventListener("click", cargarRegistro);
 
+const botonLogin = document.querySelector("#botonLogin");
+botonLogin.addEventListener("click", cargarLogin);
+
 lsSetDades(getUsuaris())
 
 function cargarRegistro(){
@@ -29,8 +32,9 @@ function cargarRegistro(){
   
   const botonEnviarRegistro = document.querySelector("#botonEnviarRegistro");
   botonEnviarRegistro.addEventListener("click", registrarUsuario);
-
-  
+  botonLogin.addEventListener("click", cargarLogin);
+  botonRegistro.removeEventListener("click", cargarRegistro);
+  botonRegistro.removeEventListener("click", cargarLogin);
 
 }
 
@@ -39,36 +43,30 @@ function registrarUsuario(){
   cargarLogin()
 }
 
-const botonIniciar = document.querySelector("#botonIniciar");
-const botonLogin = document.querySelector("#botonLogin");
-botonLogin.addEventListener("click", cargarLogin);
+
+
 
 
 
 function cargarLogin(){
   event.preventDefault();
   document.querySelector('main').innerHTML = login.template
-  
+  login.script()
+  botonRegistro.removeEventListener("click", cargarRegistro);
+  botonRegistro.removeEventListener("click", cargarLogin);
+  botonRegistro.addEventListener("click", cargarRegistro);
   document.getElementById("botonLogin").className = "d-none";
   document.getElementById("botonRegistro").className = "btn btn-secondary ms-2";
   document.getElementById("botonPanel").className = "d-none";
   document.getElementById("botonCerrarSesion").className =  "d-none";
-
-  botonIniciar.addEventListener("click", iniciarSesion);
-}
-
-function iniciarSesion(){
-  botonIniciar.removeEventListener("click", iniciarSesion)
-  const log=login.script()
-  if(log==1){
-    cargarPanel()
-  }
   
 }
+
 
 const botonPanel = document.querySelector("#botonPanel");
 botonPanel.addEventListener("click", cargarPanel);
 document.getElementById("botonPanel").className = "d-none";
+
 function cargarPanel(){
   event.preventDefault();
   document.querySelector('main').innerHTML = panel.template
@@ -78,7 +76,6 @@ function cargarPanel(){
   document.getElementById("botonPanel").className = "d-none";
   document.getElementById("botonCerrarSesion").className =  "btn btn-secondary ms-2";
 }
-
 
 
 

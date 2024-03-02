@@ -68,6 +68,9 @@ export const panel = {
         lsSetDades(getTiquets())
         pintaTiquetsPendientes()
         pintaTiquetsResueltos()
+        const eventoBody = document.querySelector('body')
+        
+        
 
         function pintaTiquetsPendientes(){
             let html = ''
@@ -129,8 +132,7 @@ export const panel = {
             document.querySelector('#tiquetsResueltos').innerHTML = html
         }
 
-
-        document.querySelector('body').addEventListener('click', (e) =>{
+        const funcion = (e) =>{
             // borrar tarea
             
             const tiquets = lsGetDades()
@@ -251,11 +253,11 @@ export const panel = {
             if(e.target.classList.contains('botonComentario')){
                 const idTarea = e.target.dataset.incidenciaid
                 // const bdElementoEditado = datosBd.filter((item)=>item.id == idTarea)
-                
+                quitarEvento()
                 document.querySelector('main').innerHTML = comentarios.template
                 console.log(idTarea)
                 comentarios.script(idTarea)
-        
+               
         
                 // pintarTareasPendientes(bdElementoBorrado)
                 // datosBd=bdElementoBorrado
@@ -281,8 +283,19 @@ export const panel = {
                 pintaTiquetsPendientes()
                 pintaTiquetsResueltos()
             }
+        }
+
+        quitarEvento()
+        quitarEvento()
+        ponerEvento()
+
+        function quitarEvento(){
+            eventoBody.removeEventListener('click', funcion)
+        }
+        function ponerEvento(){
+            eventoBody.addEventListener('click', funcion)
+        }
         
-        })
 
 
         console.log('Inyectamos vista panel')

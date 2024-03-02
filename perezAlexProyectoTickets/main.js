@@ -39,8 +39,11 @@ function registrarUsuario(){
   cargarLogin()
 }
 
+const botonIniciar = document.querySelector("#botonIniciar");
 const botonLogin = document.querySelector("#botonLogin");
 botonLogin.addEventListener("click", cargarLogin);
+
+
 
 function cargarLogin(){
   event.preventDefault();
@@ -51,11 +54,11 @@ function cargarLogin(){
   document.getElementById("botonPanel").className = "d-none";
   document.getElementById("botonCerrarSesion").className =  "d-none";
 
-  const botonIniciar = document.querySelector("#botonIniciar");
   botonIniciar.addEventListener("click", iniciarSesion);
 }
 
 function iniciarSesion(){
+  botonIniciar.removeEventListener("click", iniciarSesion)
   const log=login.script()
   if(log==1){
     cargarPanel()

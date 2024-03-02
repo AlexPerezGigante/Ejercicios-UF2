@@ -18,7 +18,7 @@ html += `
         <label for="fecha" class="form-label me-2 mt-3">Fecha: </label>
         <div class="d-flex align-items-center">
           <input type="datetime-local" class="form-control w-25 inputFecha">
-          <button class="btn btn-success ms-auto botonAgregar">Añadir comentario</button>
+          <button class="btn btn-success ms-auto botonAgregarComentario">Añadir comentario</button>
         </div>
       </form>
 
@@ -36,8 +36,9 @@ export const comentarios = {
     ,
     script:(id)=>{
         lsSetDades(getComentarios())
-        
+        const eventoBody = document.querySelector('body')
         pintaComentarios()
+        
 
         function pintaComentarios(){
             let html = ''
@@ -65,53 +66,70 @@ export const comentarios = {
 
         document.querySelector('body').addEventListener('click', (e) =>{
             
-            if(e.target.classList.contains('botonVolver')){
-                event.preventDefault()
-                document.querySelector('main').innerHTML = panel.template
-                panel.script()
-            }
-            if(e.target.classList.contains('botonAgregar')){
-                event.preventDefault()
-                let fecha = document.querySelector('.inputFecha').value
-                fecha = fecha + ''
-                fecha = fecha.split('T')
-                fecha = fecha[0].split('-')
-                fecha = fecha[2] + '/' + fecha[1] + '/' + fecha[0]
-
-                let correo = document.querySelector('#correo').innerText
-
-                const usuarios = lsGetUsuarios()
-                
-                function lsGetUsuarios(){
-                  const textoLocal = localStorage.getItem('usuaris_Dades')
-                  const dades = JSON.parse(textoLocal)
-                  return(dades)
-              }
-              
-              const bdElemento = usuarios.filter((item)=>item.email == correo)
-
-              const autor = bdElemento[0].nombre
-
-              
-
-                const comentario = document.querySelector('.inputComentario').value
-
-                const objComentario = {
-                    "codigo": id,
-                    "autor": autor,
-                    "fecha": fecha,
-                    "comentario": comentario
-                }
-
-                const array = lsGetDades()
-                array.push(objComentario)
-                setComentarios(array)
-                lsSetDades(array)
-
-                pintaComentarios()
-                
-                
-            }
+            
         })
+
+        const funcion = (e) => {
+
+        if(e.target.classList.contains('botonVolver')){
+            event.preventDefault()
+            quitarEvento()
+            document.querySelector('main').innerHTML = panel.template
+            panel.script()
+        }
+        if(e.target.classList.contains('botonAgregarComentario')){
+            event.preventDefault()
+            let fecha = document.querySelector('.inputFecha').value
+            fecha = fecha + ''
+            fecha = fecha.split('T')
+            fecha = fecha[0].split('-')
+            fecha = fecha[2] + '/' + fecha[1] + '/' + fecha[0]
+
+            let correo = document.querySelector('#correo').innerText
+
+            const usuarios = lsGetUsuarios()
+            
+            function lsGetUsuarios(){
+              const textoLocal = localStorage.getItem('usuaris_Dades')
+              const dades = JSON.parse(textoLocal)
+              return(dades)
+          }
+          
+          const bdElemento = usuarios.filter((item)=>item.email == correo)
+
+          const autor = bdElemento[0].nombre
+
+          
+
+            const comentario = document.querySelector('.inputComentario').value
+
+            const objComentario = {
+                "codigo": id,
+                "autor": autor,
+                "fecha": fecha,
+                "comentario": comentario
+            }
+
+            const array = lsGetDades()
+            array.push(objComentario)
+            setComentarios(array)
+            lsSetDades(array)
+
+            pintaComentarios()
+            
+            
+        }
+
+        }
+
+        quitarEvento()
+        ponerEvento()
+
+        function quitarEvento(){
+            eventoBody.removeEventListener('click', funcion)
+        }
+        function ponerEvento(){
+            eventoBody.addEventListener('click', funcion)
+        }
     }
 }

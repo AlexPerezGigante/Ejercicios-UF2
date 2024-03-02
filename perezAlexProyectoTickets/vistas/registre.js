@@ -1,4 +1,4 @@
-import { usuaris } from "../bd/usuaris.js";
+import { lsGetDades, lsSetDades, setUsuaris, getUsuaris } from "../bd/usuaris.js";
 
 export const registro = {
     template://html 
@@ -22,10 +22,14 @@ export const registro = {
     `,
     script: () => {
         
+        const inputNombre = document.querySelector('#nombre')
+        const inputApellido = document.querySelector('#apellidos')
         const inputEmail = document.querySelector("#email");
         const inputPass = document.querySelector("#pass");
        
         const registro = {
+            nombre: inputNombre.value,
+            apellidos: inputApellido.value,
             email: inputEmail.value ,
             password: inputPass.value
         }
@@ -33,8 +37,12 @@ export const registro = {
         registrarUsuario(registro)
         // Esta función recibe un objeto, lee el localStorage, agrega un registro al objeto JSON del localStorage y lo vueve a subir al localStorage
         function registrarUsuario(usuario){
-            console.log("insertar usuario: ", usuario)
+            // console.log("insertar usuario: ", usuario)
+            const usuaris = lsGetDades()
             usuaris.push(usuario)
+
+            setUsuaris(usuaris)
+            lsSetDades(usuaris)
         }
 
         alert("Usuario "+ inputEmail.value + " creado correctamente! ")

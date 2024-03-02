@@ -68,6 +68,9 @@ export const panel = {
         lsSetDades(getTiquets())
         pintaTiquetsPendientes()
         pintaTiquetsResueltos()
+        const eventoBody = document.querySelector('body')
+        
+        
 
         function pintaTiquetsPendientes(){
             let html = ''
@@ -129,8 +132,7 @@ export const panel = {
             document.querySelector('#tiquetsResueltos').innerHTML = html
         }
 
-
-        document.querySelector('body').addEventListener('click', (e) =>{
+        const funcion = (e) =>{
             // borrar tarea
             
             const tiquets = lsGetDades()
@@ -205,7 +207,37 @@ export const panel = {
                     date = date[0].split('-')
                     date = date[2] + '/' + date[1] + '/' + date[0]
                     
-                    
+                    const id = elemento[0].codigo
+
+                    const aula = document.querySelector('.aula').value
+                    const grupo = document.querySelector('.grupo').value
+                    const ordenador = document.querySelector('.ordenador').value
+                    const descripcion = document.querySelector('.descripcion').value
+                    const alumno = document.querySelector('.alumno').value
+
+                    const obj = {
+                        
+                            codigo: id,
+                            fechaCreado: date,
+                            fechaResuelto: '',
+                            aula: aula.toUpperCase(),
+                            grupo: grupo.toUpperCase(),
+                            ordenador: ordenador.toUpperCase(),
+                            descripcion: descripcion,
+                            alumno: alumno,
+                            estado: 'pendiente'  
+                    }
+                    const bdElementoBorrado = tiquets.filter((item)=>item.codigo != id)
+
+                    bdElementoBorrado.push(obj)
+
+                    lsSetDades(bdElementoBorrado)
+                    setTiquets(bdElementoBorrado)
+                    pintaTiquetsPendientes()
+                    pintaTiquetsResueltos()
+
+
+
 
                     modal.hide()
                     
@@ -221,10 +253,11 @@ export const panel = {
             if(e.target.classList.contains('botonComentario')){
                 const idTarea = e.target.dataset.incidenciaid
                 // const bdElementoEditado = datosBd.filter((item)=>item.id == idTarea)
+                quitarEvento()
                 document.querySelector('main').innerHTML = comentarios.template
                 console.log(idTarea)
                 comentarios.script(idTarea)
-        
+               
         
                 // pintarTareasPendientes(bdElementoBorrado)
                 // datosBd=bdElementoBorrado
@@ -233,7 +266,12 @@ export const panel = {
             if(e.target.classList.contains('botonResolver')){
                 const idTarea = e.target.dataset.incidenciaid
                  console.log('tareaId', idTarea)
-        
+                
+                 let date = Date.now()
+                 
+
+                 console.log(date)
+
                 tiquets.forEach(element => {
                     if(element.codigo==idTarea){
                         element.estado='resuelto'
@@ -245,8 +283,23 @@ export const panel = {
                 pintaTiquetsPendientes()
                 pintaTiquetsResueltos()
             }
+        }
+        document.querySelector('#botonLogin').addEventListener('click', quitarEvento)
+        document.querySelector('#botonRegistro').addEventListener('click', quitarEvento)
+        document.querySelector('#botonCerrarSesion').addEventListener('click', quitarEvento)
+
+        quitarEvento()
+        ponerEvento()
+
         
-        })
+
+        function quitarEvento(){
+            eventoBody.removeEventListener('click', funcion)
+        }
+        function ponerEvento(){
+            eventoBody.addEventListener('click', funcion)
+        }
+        
 
 
         console.log('Inyectamos vista panel')

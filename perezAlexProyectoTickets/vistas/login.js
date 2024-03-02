@@ -1,4 +1,7 @@
-import { usuaris } from "../bd/usuaris";
+import { lsGetDades } from "../bd/usuaris";
+
+import { panel } from "./panel";
+
 export const login = {
     template: //html
     `
@@ -33,31 +36,50 @@ export const login = {
     `,
     script: () => {
         console.log('Inyectamos login')
-
-        const inputEmail = document.querySelector("#email");
-        const email= inputEmail.value
-        const inputPass = document.querySelector("#pass");
-        const pass=inputPass.value
-        let html="<span>"
-        let error=1
-        usuaris.forEach(element => {
-            if(email == element.email){
-                if(pass == element.password){
-                    html+=email
-                    html+="</span>"
-                    document.querySelector("#correo").innerHTML=html
-                    error=0
+        const botonIniciar = document.querySelector("#botonIniciar");
+        botonIniciar.addEventListener("click", iniciarSesion);
+        
+        
+        function iniciarSesion () {
+            console.log('iniciando sesion')
+            
+            const inputEmail = document.querySelector("#email");
+            const email= inputEmail.value
+            const inputPass = document.querySelector("#pass");
+            const pass=inputPass.value
+            let html=''
+            let error=1
+            lsGetDades().forEach(element => {
+                if(email == element.email){
+                    if(pass == element.password){
+                        error=0
+                    }
                 }
+            });
+            if(error==1){
+                alert("Correo o contraseña erronea!")
+                
             }
-        });
-        if(error==1){
-            alert("Correo o contraseña erronea!")
-            return(0)
+            else{
+                alert("Bienvenido " + email)
+
+                    botonIniciar.removeEventListener("click", iniciarSesion);
+                    html+=email
+                    document.querySelector("#correo").innerHTML=html
+                    event.preventDefault();
+                    document.querySelector('main').innerHTML = panel.template
+                    panel.script()
+                    document.getElementById("botonLogin").className = " btn btn-secondary ms-2";
+                    document.getElementById("botonRegistro").className = "btn btn-secondary ms-2";
+                    document.getElementById("botonPanel").className = "d-none";
+                    document.getElementById("botonCerrarSesion").className =  "btn btn-secondary ms-2";
+                  
+            }
         }
-        else{
-            alert("Bienvenido " + email)
-            return(1)
-        }
+            
+        
+
+       
         
             
         

@@ -1,11 +1,13 @@
 import { setTiquets ,getTiquets, lsSetDades, lsGetDades  } from "../bd/tiquets.js"
 import { comentarios } from "./comentarios.js"
-import { editarTickets } from "./editarTicket.js"
+import { nuevoTicket } from "./nuevoTicket.js"
+
 let html=''
 
 html+= `
     <div class="container mt-5 ">
         <h1>Administración de incidencias</h1>
+        <button class="btn btn-success float-end botonCrear" title="añadir ticket">Añadir Ticket</button>
         <h2 class="mt-5">Tickets pendientes</h2>
         <table class="table mt-4">
         <thead>
@@ -150,6 +152,12 @@ export const panel = {
                 pintaTiquetsPendientes()
                 pintaTiquetsResueltos()
                 
+            }
+            if(e.target.classList.contains('botonCrear')){
+                quitarEvento()
+                document.querySelector('main').innerHTML = nuevoTicket.template
+                nuevoTicket.script()
+
             }
             if(e.target.classList.contains('botonEditar')){
                 const idTarea = e.target.dataset.incidenciaid
@@ -300,8 +308,5 @@ export const panel = {
             eventoBody.addEventListener('click', funcion)
         }
         
-
-
-        console.log('Inyectamos vista panel')
     }
 }

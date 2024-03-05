@@ -10,8 +10,9 @@ import { setUsuaris, getUsuaris, lsGetDades, lsSetDades } from "./bd/usuaris.js"
 
 document.querySelector('header').innerHTML = header.template
 header.script()
-document.querySelector('main').innerHTML = panel.template
-panel.script()
+document.querySelector('main').innerHTML = login.template
+login.script()
+document.getElementById("botonLogin").className = "d-none";
 
 const botonRegistro = document.querySelector("#botonRegistro");
 botonRegistro.addEventListener("click", cargarRegistro);
@@ -21,7 +22,7 @@ botonLogin.addEventListener("click", cargarLogin);
 
 lsSetDades(getUsuaris())
 
-function cargarRegistro(){
+export function cargarRegistro(){
   event.preventDefault();
   document.querySelector('main').innerHTML = registro.template
   
@@ -38,15 +39,6 @@ function cargarRegistro(){
 
 }
 
-function registrarUsuario(){
-  registro.script()
-  cargarLogin()
-}
-
-
-
-
-
 
 function cargarLogin(){
   event.preventDefault();
@@ -62,6 +54,10 @@ function cargarLogin(){
   
 }
 
+function registrarUsuario(){
+  registro.script()
+  cargarLogin()
+}
 
 const botonPanel = document.querySelector("#botonPanel");
 botonPanel.addEventListener("click", cargarPanel);

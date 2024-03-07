@@ -20,9 +20,9 @@ export const registro = {
                             Este campo no puede estar vacío!
                         </div>
                         <label  for="email" class="form-label">Email:</label>
-                        <input required id="email" type="text" class="form-control" />
+                        <input required id="email" type="email" class="form-control" />
                         <div class="invalid-feedback email">
-                            Este campo no puede estar vacío!
+                            Este campo no puede estar vacío o no es un correo!
                         </div>
                         <label  for="pass" class="form-label mt-3">Contraseña:</label>
                         <input required min-lenght=6 id="pass" type="password" class="form-control" />
@@ -37,8 +37,8 @@ export const registro = {
     script: () => { 
         const formulario = document.querySelector(".formRegistro")
         formulario.addEventListener("submit", (event) => {
-            const menseja = 'Este campo no puede estar vacío!'
-            document.querySelector('.email').innerHTML = menseja
+            const mensaje = 'Este campo no puede estar vacío o no es un correo!'
+            document.querySelector('.email').innerHTML = mensaje
             event.preventDefault()
           //Comprobamos si el formulario no valida 
           if (!formulario.checkValidity()) {

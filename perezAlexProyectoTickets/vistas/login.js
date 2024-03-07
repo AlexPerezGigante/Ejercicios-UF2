@@ -11,9 +11,9 @@ export const login = {
                 <div class="m-5 mx-auto" style="max-width: 400px">
                     <form action="" class="form border shadow-sm p-3 formInicio" novalidate>
                         <label for="email" class="form-label">Email:</label>
-                        <input required id="email" type="text" class="form-control" />
+                        <input required id="email" type="email" class="form-control" />
                         <div class="invalid-feedback">
-      Este campo no puede estar vacío!
+      Este campo no puede estar vacío o no es un correo!
     </div>
                         <label for="pass" class="form-label mt-3">Contraseña:</label>
                         <input required id="pass" type="password" class="form-control" />

@@ -25,14 +25,13 @@ lsSetDades(getUsuaris())
 export function cargarRegistro(){
   event.preventDefault();
   document.querySelector('main').innerHTML = registro.template
+  registro.script()
   
   document.getElementById("botonLogin").className = " btn btn-secondary ms-2";
   document.getElementById("botonRegistro").className = "d-none";
   document.getElementById("botonPanel").className = "d-none";
   document.getElementById("botonCerrarSesion").className =  "d-none";
   
-  const botonEnviarRegistro = document.querySelector("#botonEnviarRegistro");
-  botonEnviarRegistro.addEventListener("click", registrarUsuario);
   botonLogin.addEventListener("click", cargarLogin);
   botonRegistro.removeEventListener("click", cargarRegistro);
   botonRegistro.removeEventListener("click", cargarLogin);
@@ -55,10 +54,6 @@ function cargarLogin(){
   
 }
 
-function registrarUsuario(){
-  registro.script()
-  cargarLogin()
-}
 
 const botonPanel = document.querySelector("#botonPanel");
 botonPanel.addEventListener("click", cargarPanel);

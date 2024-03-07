@@ -13,7 +13,7 @@ export const header = {
         <button id="botonCerrarSesion" class="d-none">CERRAR SESIÓN</button>
       </div>
       <div>
-        <span  id="correo">administrador@fpllefia.com</span>
+        <span  id="correo"></span>
       </div>
     </div>
   </nav>`,

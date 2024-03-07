@@ -7,12 +7,11 @@ let html = ''
 html += `
 <main class="container mt-5">
     <div class="d-flex">
-      <h1>Comentarios</h1><button class="btn btn-link ms-auto botonVolver" > < Volver</button>
+      <h1>Nuevo ticket</h1><button class="btn btn-link ms-auto botonVolver" > < Volver</button>
     </div>
     
-    <h2 class="my-4">Código ticket: <span id="codigo">123456</span></h2>
-    <div class="">
-      <form action="" class="form card p-3 shadow formTicket">
+    <div class="mt-3">
+      <form action="" class="form card p-3 shadow formTicket" novalidate>
       <div class="d-flex col-12 ">
           <div class="col-4">
               <label for="aula" class="form-label">Aula:</label> 
@@ -43,7 +42,7 @@ html += `
       Este campo no puede estar vacío!
     </div>
 
-      <button type="submit" class="btn btn-success ms-auto botonAgregarComentario">Añadir ticket</button>
+      <button type="submit" class="btn btn-success ms-auto mt-2 botonAgregarTicket">Añadir ticket</button>
       </form>
     </div>
     
@@ -53,7 +52,7 @@ html += `
 export const nuevoTicket = {
     template: html
     ,
-    script:()=>{
+    script:(rol)=>{
 
         const eventoBody = document.querySelector('body')
 
@@ -64,7 +63,7 @@ export const nuevoTicket = {
             event.preventDefault()
             quitarEvento()
             document.querySelector('main').innerHTML = panel.template
-            panel.script()
+            panel.script(rol)
         }
         //Capturamos el formulario en una variable
   const formulario = document.querySelector(".formTicket")
@@ -147,8 +146,16 @@ export const nuevoTicket = {
          lsSetDades(array)
   
          quitarEvento()
-         document.querySelector('main').innerHTML = panel.template
-         panel.script()
+
+         if(rol!='alumno'){
+          document.querySelector('main').innerHTML = panel.template
+          panel.script(rol)
+         }else{
+          const insert = `<h1>Ticket insertado correctamente!</h1>`
+          document.querySelector('main').innerHTML= insert
+         }
+
+         
       }
 
       i=i+1

@@ -65,7 +65,7 @@ html+= `
 export const panel = {
     template: html
     ,
-    script: () =>{
+    script: (rol) =>{
 
         lsSetDades(getTiquets())
         pintaTiquetsPendientes()
@@ -78,28 +78,47 @@ export const panel = {
             let html = ''
             const tiquets = lsGetDades()
             tiquets.forEach((element) => {
-                if(element.estado=='pendiente'){
+                if(rol=='administrador'){
+                    if(element.estado=='pendiente'){
+                        html +=`
+                        <tr>
+                        <td>${element.codigo}</td>
+                        <td>${element.fechaCreado}</td>
+                        <td>${element.aula}</td>
+                        <td>${element.grupo}</td>
+                        <td>${element.ordenador}</td>
+                        <td>${element.descripcion}</td>
+                        <td>${element.alumno}</td>
+                        <td><button data-incidenciaid=${element.codigo} class="btn btn-success botonResolver" title="Resolver ticket">Resolver</button></td>
+                        <td><button data-incidenciaid=${element.codigo} class="btn btn-warning botonEditar"  title="Añadir comentario"><i data-incidenciaid=${element.codigo} class="bi  bi-pencil botonEditar" ></i>
+                        </button>
+                        </td>
+                        <td><button data-incidenciaid=${element.codigo} class="btn btn-info botonComentario" title="Ver comentarios"><i data-incidenciaid=${element.codigo} class="bi bi-chat-left-text botonComentario"></i>
+                        </button></td>
+                        <td><button data-incidenciaid=${element.codigo} class="btn btn-danger botonBorrar" title="Eliminar ticket"><i data-incidenciaid=${element.codigo} class="bi bi-trash3 botonBorrar"></i>
+                        </i>
+                        </button></td>
+                        </tr>
+                        `
+                    }
+                }else{
+                    if(element.estado=='pendiente'){
                     html +=`
-                    <tr>
-                    <td>${element.codigo}</td>
-                    <td>${element.fechaCreado}</td>
-                    <td>${element.aula}</td>
-                    <td>${element.grupo}</td>
-                    <td>${element.ordenador}</td>
-                    <td>${element.descripcion}</td>
-                    <td>${element.alumno}</td>
-                    <td><button data-incidenciaid=${element.codigo} class="btn btn-success botonResolver" title="Resolver ticket">Resolver</button></td>
-                    <td><button data-incidenciaid=${element.codigo} class="btn btn-warning botonEditar"  title="Añadir comentario"><i data-incidenciaid=${element.codigo} class="bi  bi-pencil botonEditar" ></i>
-                    </button>
-                    </td>
-                    <td><button data-incidenciaid=${element.codigo} class="btn btn-info botonComentario" title="Ver comentarios"><i data-incidenciaid=${element.codigo} class="bi bi-chat-left-text botonComentario"></i>
-                    </button></td>
-                    <td><button data-incidenciaid=${element.codigo} class="btn btn-danger botonBorrar" title="Eliminar ticket"><i data-incidenciaid=${element.codigo} class="bi bi-trash3 botonBorrar"></i>
-                    </i>
-                    </button></td>
-                    </tr>
-                    `
+                        <tr>
+                        <td>${element.codigo}</td>
+                        <td>${element.fechaCreado}</td>
+                        <td>${element.aula}</td>
+                        <td>${element.grupo}</td>
+                        <td>${element.ordenador}</td>
+                        <td>${element.descripcion}</td>
+                        <td>${element.alumno}</td>
+                        <td><button data-incidenciaid=${element.codigo} class="btn btn-info botonComentario" title="Ver comentarios"><i data-incidenciaid=${element.codigo} class="bi bi-chat-left-text botonComentario"></i>
+                        </button></td>
+                        </tr>
+                        `
+                    }
                 }
+                
             }),
 
             document.querySelector('#tiquetsPendientes').innerHTML = html
@@ -109,26 +128,47 @@ export const panel = {
             let html = ''
             const tiquets = lsGetDades()
             tiquets.forEach((element) => {
-                if(element.estado=='resuelto'){
-                    html+=`
-                    <tr>
-                    <td>${element.codigo}</td>
-                    <td>${element.fechaCreado}</td>
-                    <td>${element.fechaResuelto}</td>
-                    <td>${element.aula}</td>
-                    <td>${element.grupo}</td>
-                    <td>${element.ordenador}</td>
-                    <td>${element.descripcion}</td>
-                    <td>${element.alumno}</td>
-                    
-                    <td><button data-incidenciaid=${element.codigo} class="btn btn-info botonComentario" title="Ver comentarios"><i data-incidenciaid=${element.codigo} class="bi bi-chat-left-text botonComentario"></i>
-                    </button></td>
-                    <td><button data-incidenciaid=${element.codigo} class="btn btn-danger botonBorrar" title="Eliminar ticket"><i data-incidenciaid=${element.codigo} class="bi bi-trash3 botonBorrar"></i>
-                    </i>
-                    </button></td>
-                    </tr>
-                    `
+                if(rol=='administrador'){
+                    if(element.estado=='resuelto'){
+                        html+=`
+                        <tr>
+                        <td>${element.codigo}</td>
+                        <td>${element.fechaCreado}</td>
+                        <td>${element.fechaResuelto}</td>
+                        <td>${element.aula}</td>
+                        <td>${element.grupo}</td>
+                        <td>${element.ordenador}</td>
+                        <td>${element.descripcion}</td>
+                        <td>${element.alumno}</td>
+                        
+                        <td><button data-incidenciaid=${element.codigo} class="btn btn-info botonComentario" title="Ver comentarios"><i data-incidenciaid=${element.codigo} class="bi bi-chat-left-text botonComentario"></i>
+                        </button></td>
+                        <td><button data-incidenciaid=${element.codigo} class="btn btn-danger botonBorrar" title="Eliminar ticket"><i data-incidenciaid=${element.codigo} class="bi bi-trash3 botonBorrar"></i>
+                        </i>
+                        </button></td>
+                        </tr>
+                        `
+                    }
+                }else{
+                    if(element.estado=='resuelto'){
+                        html+=`
+                        <tr>
+                        <td>${element.codigo}</td>
+                        <td>${element.fechaCreado}</td>
+                        <td>${element.fechaResuelto}</td>
+                        <td>${element.aula}</td>
+                        <td>${element.grupo}</td>
+                        <td>${element.ordenador}</td>
+                        <td>${element.descripcion}</td>
+                        <td>${element.alumno}</td>
+                        
+                        <td><button data-incidenciaid=${element.codigo} class="btn btn-info botonComentario" title="Ver comentarios"><i data-incidenciaid=${element.codigo} class="bi bi-chat-left-text botonComentario"></i>
+                        </button></td>
+                        </tr>
+                        `
+                    }
                 }
+               
             });
 
             document.querySelector('#tiquetsResueltos').innerHTML = html
@@ -156,7 +196,7 @@ export const panel = {
             if(e.target.classList.contains('botonCrear')){
                 quitarEvento()
                 document.querySelector('main').innerHTML = nuevoTicket.template
-                nuevoTicket.script()
+                nuevoTicket.script(rol)
 
             }
             if(e.target.classList.contains('botonEditar')){
@@ -170,36 +210,56 @@ export const panel = {
                 
                 
                 const html = `
+                <form action="" class="form card p-3 shadow formEditarTicket" novalidate>
                     <p>Código incidencia: <span id="codigo">${elemento[0].codigo}</span></p>
                     <label for="fecha" class="form-label">Fecha:</label> 
-                    <input type="datetime-local" class="form-control fecha" value='${fecha}'>
+                    <input required type="datetime-local" class="form-control fecha" value='${fecha}'>
+                    <div  class="invalid-feedback">
+                            Este campo no puede estar vacío!
+                        </div>
                     <div class="d-flex">
                         <div>
                             <label for="aula" class="form-label">Aula:</label> 
-                            <input type="text" class="form-control w-75  aula" value='${elemento[0].aula}'>
+                            <input required type="text" class="form-control w-75  aula" value='${elemento[0].aula}'>
+                            <div  class="invalid-feedback">
+                            Este campo no puede estar vacío!
+                        </div>
                         </div>
                         <div>
                             <label for="grupo" class="form-label">Grupo:</label> 
-                            <input type="text" class="form-control w-75  grupo" value='${elemento[0].grupo}'>
+                            <input required type="text" class="form-control w-75  grupo" value='${elemento[0].grupo}'>
+                            <div  class="invalid-feedback">
+                            Este campo no puede estar vacío!
+                        </div>
                         </div>
                         <div>
                             <label for="ordenador" class="form-label">Ordenador:</label> 
-                            <input type="text" class="form-control w-75 ordenador" value='${elemento[0].ordenador}'>
+                            <input required type="text" class="form-control w-75 ordenador" value='${elemento[0].ordenador}'>
+                            <div class="invalid-feedback">
+                            Este campo no puede estar vacío!
+                        </div>
                         </div>
                     </div>
                     
             
                     <label for="descripcion" class="form-label">Descripción:</label> 
-                    <input type="text" class="form-control descripcion" value='${elemento[0].descripcion}'>
+                    <input required type="text" class="form-control descripcion" value='${elemento[0].descripcion}'>
+                    <div class="invalid-feedback">
+                            Este campo no puede estar vacío!
+                        </div>
                     <label for="alumno" class="form-label">Alumno:</label> 
-                    <input type="text" class="form-control alumno" value='${elemento[0].alumno}'>
+                    <input required type="text" class="form-control alumno" value='${elemento[0].alumno}'>
+                    <div class="invalid-feedback">
+                            Este campo no puede estar vacío!
+                        </div>
                     
                 </div>
                 <div class="modal-footer">
             
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary botonGuardar" >Guardar cambios</button>
+                    <button type="submit" class="btn btn-primary botonGuardar" >Guardar cambios</button>
                 </div>
+                </form>
                 `
 
                 document.querySelector('.modal-body').innerHTML = html
@@ -207,8 +267,18 @@ export const panel = {
                 const modal = new bootstrap.Modal('#exampleModal');
                 modal.show();
 
-                const guardar = document.querySelector('.botonGuardar')
-                guardar.addEventListener('click', (e)=>{
+                const formulario = document.querySelector(".formEditarTicket")
+                //Detectamos su evento submit (enviar)
+                formulario.addEventListener("submit", (event) => {
+                    event.preventDefault()
+                    //Comprobamos si el formulario no valida 
+                    if (!formulario.checkValidity()) {
+                    //Detenemos el evento enviar (submit)
+                    event.preventDefault()
+                    event.stopPropagation()
+                    //Y añadimos la clase 'was-validate' para que se muestren los mensajes
+                    formulario.classList.add('was-validated')
+                    }else{
                     let date = document.querySelector('.fecha').value
                     date = date + ''
                     date = date.split('T')
@@ -249,7 +319,7 @@ export const panel = {
 
                     modal.hide()
                     
-                })
+                }})
                 // editarTickets.script(elemento[0])
                 
         
@@ -263,8 +333,8 @@ export const panel = {
                 // const bdElementoEditado = datosBd.filter((item)=>item.id == idTarea)
                 quitarEvento()
                 document.querySelector('main').innerHTML = comentarios.template
-                console.log(idTarea)
-                comentarios.script(idTarea)
+               
+                comentarios.script(idTarea, rol)
                
         
                 // pintarTareasPendientes(bdElementoBorrado)

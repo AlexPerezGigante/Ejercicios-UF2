@@ -12,7 +12,7 @@ html += `
     
     <h2 class="my-4">Código ticket: <span id="codigo">123456</span></h2>
     <div class="">
-      <form action="" class="form card p-3 shadow">
+      <form action="" class="form card p-3 shadow" novalidate>
         <label for="comentario" class="form-label">Comentario: </label>
         <textarea required class="form-control inputComentario" col="3"></textarea>
         <div class="invalid-feedback">
@@ -40,7 +40,7 @@ html += `
 export const comentarios = {
     template: html
     ,
-    script:(id)=>{
+    script:(id, rol)=>{
         lsSetDades(getComentarios())
         const eventoBody = document.querySelector('body')
         pintaComentarios()
@@ -74,13 +74,12 @@ export const comentarios = {
             event.preventDefault()
             quitarEvento()
             document.querySelector('main').innerHTML = panel.template
-            panel.script()
+            panel.script(rol)
         }
         //Capturamos el formulario en una variable
         const formulario = document.querySelector("form")
         //Detectamos su evento submit (enviar)
         formulario.addEventListener("submit", (event) => {
-          console.log('a')
           //Comprobamos si el formulario no valida 
           if (!formulario.checkValidity()) {
             //Detenemos el evento enviar (submit)
@@ -111,6 +110,7 @@ export const comentarios = {
           const bdElemento = usuarios.filter((item)=>item.email == correo)
 
           const autor = bdElemento[0].nombre
+
           
             const inputComentario = document.querySelector('.inputComentario')
             const comentario = inputComentario.value
@@ -122,12 +122,12 @@ export const comentarios = {
                 "fecha": fecha,
                 "comentario": comentario
             }
-
+            
             const array = lsGetDades()
             array.push(objComentario)
             setComentarios(array)
             lsSetDades(array)
-
+            
             pintaComentarios()
             
           }

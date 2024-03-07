@@ -1,5 +1,5 @@
 import { lsGetDades } from "../bd/usuaris";
-
+import { cargarRegistro } from "../main";
 import { panel } from "./panel";
 
 export const login = {
@@ -28,9 +28,8 @@ export const login = {
                         <a class="d-block text-end" href="#">¿Has olvidado tu contraseña?</a>
                         <button type="button" class="btn btn-primary w-100 mt-3" id="botonIniciar" href="#">Iniciar sesión</button>
                     </form>
-                    <a class="d-block mt-5 btn btn-secondary mx-auto" href="#"
-                        >¿Eres nuevo? Regístrate</a
-                    >
+                    
+                    <button class="d-block mt-5 btn btn-secondary mx-auto botonRegistro col-12 ">¿Eres nuevo? Regístrate</button>
                 </div>
             </div>
     `,
@@ -38,11 +37,12 @@ export const login = {
         console.log('Inyectamos login')
         const botonIniciar = document.querySelector("#botonIniciar");
         botonIniciar.addEventListener("click", iniciarSesion);
-        
+
+        const botonRegistro = document.querySelector('.botonRegistro')
+        botonRegistro.addEventListener('click', llamaRegistro)
         
         function iniciarSesion () {
             console.log('iniciando sesion')
-            
             const inputEmail = document.querySelector("#email");
             const email= inputEmail.value
             const inputPass = document.querySelector("#pass");
@@ -63,7 +63,7 @@ export const login = {
             else{
                 alert("Bienvenido " + email)
 
-                    botonIniciar.removeEventListener("click", iniciarSesion);
+                    quitarEventoIniciar()
                     html+=email
                     document.querySelector("#correo").innerHTML=html
                     event.preventDefault();
@@ -76,10 +76,19 @@ export const login = {
                   
             }
         }
-            
         
+        function llamaRegistro(){
+            quitarEventoRegistro
+            cargarRegistro()
+        }
 
+        function quitarEventoRegistro(){
+            botonRegistro.removeEventListener('click', llamaRegistro)
+        }
        
+        function quitarEventoIniciar(){
+            botonIniciar.removeEventListener("click", iniciarSesion)
+        }
         
             
         

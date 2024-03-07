@@ -68,13 +68,6 @@ export const comentarios = {
 
         }
 
-        
-
-        document.querySelector('body').addEventListener('click', (e) =>{
-            
-            
-        })
-
         const funcion = (e) => {
 
         if(e.target.classList.contains('botonVolver')){
@@ -84,66 +77,65 @@ export const comentarios = {
             panel.script()
         }
         //Capturamos el formulario en una variable
-  const formulario = document.querySelector("form")
-  //Detectamos su evento submit (enviar)
-  formulario.addEventListener("submit", (event) => {
-    //Comprobamos si el formulario no valida 
-    if (!formulario.checkValidity()) {
-      //Detenemos el evento enviar (submit)
-      event.preventDefault()
-      event.stopPropagation()
-      //Y añadimos la clase 'was-validate' para que se muestren los mensajes
-    formulario.classList.add('was-validated')
-    }else{
-      
-      const inputFecha = document.querySelector('.inputFecha')
-      let fecha = inputFecha.value
-      fecha = fecha + ''
-      fecha = fecha.split('T')
-      fecha = fecha[0].split('-')
-      fecha = fecha[2] + '/' + fecha[1] + '/' + fecha[0]
-      inputFecha.value = ''
+        const formulario = document.querySelector("form")
+        //Detectamos su evento submit (enviar)
+        formulario.addEventListener("submit", (event) => {
+          console.log('a')
+          //Comprobamos si el formulario no valida 
+          if (!formulario.checkValidity()) {
+            //Detenemos el evento enviar (submit)
+            event.preventDefault()
+            event.stopPropagation()
+            //Y añadimos la clase 'was-validate' para que se muestren los mensajes
+          formulario.classList.add('was-validated')
+          }else{
+            
+            const inputFecha = document.querySelector('.inputFecha')
+            let fecha = inputFecha.value
+            fecha = fecha + ''
+            fecha = fecha.split('T')
+            fecha = fecha[0].split('-')
+            fecha = fecha[2] + '/' + fecha[1] + '/' + fecha[0]
+            inputFecha.value = ''
 
-      let correo = document.querySelector('#correo').innerText
+            let correo = document.querySelector('#correo').innerText
 
-      const usuarios = lsGetUsuarios()
-      
-      function lsGetUsuarios(){
-        const textoLocal = localStorage.getItem('usuaris_Dades')
-        const dades = JSON.parse(textoLocal)
-        return(dades)
-    }
-    
-    const bdElemento = usuarios.filter((item)=>item.email == correo)
+            const usuarios = lsGetUsuarios()
+            
+            function lsGetUsuarios(){
+              const textoLocal = localStorage.getItem('usuaris_Dades')
+              const dades = JSON.parse(textoLocal)
+              return(dades)
+          }
+          
+          const bdElemento = usuarios.filter((item)=>item.email == correo)
 
-    const autor = bdElemento[0].nombre
+          const autor = bdElemento[0].nombre
+          
+            const inputComentario = document.querySelector('.inputComentario')
+            const comentario = inputComentario.value
+            inputComentario.value = ''
 
-    
+            const objComentario = {
+                "codigo": id,
+                "autor": autor,
+                "fecha": fecha,
+                "comentario": comentario
+            }
 
-      const inputComentario = document.querySelector('.inputComentario')
-      const comentario = inputComentario.value
-      inputComentario.value = ''
+            const array = lsGetDades()
+            array.push(objComentario)
+            setComentarios(array)
+            lsSetDades(array)
 
-      const objComentario = {
-          "codigo": id,
-          "autor": autor,
-          "fecha": fecha,
-          "comentario": comentario
-      }
-
-      const array = lsGetDades()
-      array.push(objComentario)
-      setComentarios(array)
-      lsSetDades(array)
-
-      pintaComentarios()
-      
-    }
-    
-  });
+            pintaComentarios()
+            
+          }
+          
+        });
            
             
-        }
+ }
         document.querySelector('#botonLogin').addEventListener('click', quitarEvento)
         document.querySelector('#botonRegistro').addEventListener('click', quitarEvento)
         document.querySelector('#botonCerrarSesion').addEventListener('click', quitarEvento)

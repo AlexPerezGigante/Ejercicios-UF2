@@ -10,8 +10,6 @@ import { setUsuaris, getUsuaris, lsGetDades, lsSetDades } from "./bd/usuaris.js"
 
 document.querySelector('header').innerHTML = header.template
 header.script()
-document.querySelector('main').innerHTML = panel.template
-panel.script()
 
 const botonRegistro = document.querySelector("#botonRegistro");
 botonRegistro.addEventListener("click", cargarRegistro);
@@ -19,9 +17,12 @@ botonRegistro.addEventListener("click", cargarRegistro);
 const botonLogin = document.querySelector("#botonLogin");
 botonLogin.addEventListener("click", cargarLogin);
 
+cargarLogin()
+
+
 lsSetDades(getUsuaris())
 
-function cargarRegistro(){
+export function cargarRegistro(){
   event.preventDefault();
   document.querySelector('main').innerHTML = registro.template
   
@@ -38,20 +39,11 @@ function cargarRegistro(){
 
 }
 
-function registrarUsuario(){
-  registro.script()
-  cargarLogin()
-}
-
-
-
-
-
 
 function cargarLogin(){
-  event.preventDefault();
   document.querySelector('main').innerHTML = login.template
   login.script()
+  
   botonRegistro.removeEventListener("click", cargarRegistro);
   botonRegistro.removeEventListener("click", cargarLogin);
   botonRegistro.addEventListener("click", cargarRegistro);
@@ -60,8 +52,13 @@ function cargarLogin(){
   document.getElementById("botonPanel").className = "d-none";
   document.getElementById("botonCerrarSesion").className =  "d-none";
   
+  
 }
 
+function registrarUsuario(){
+  registro.script()
+  cargarLogin()
+}
 
 const botonPanel = document.querySelector("#botonPanel");
 botonPanel.addEventListener("click", cargarPanel);

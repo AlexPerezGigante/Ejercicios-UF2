@@ -89,6 +89,17 @@ let tiquets = [
  },
 ]
 
+let cont = 123463
+
+export function setCont(num){
+   cont=num
+}
+
+export function getCont(){
+   return cont
+}
+
+
 export function setTiquets(array){
    tiquets=array
 }

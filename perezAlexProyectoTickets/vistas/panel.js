@@ -275,14 +275,25 @@ export const panel = {
                 const idTarea = e.target.dataset.incidenciaid
                  console.log('tareaId', idTarea)
                 
-                 let date = Date.now()
-                 
-
-                 console.log(date)
+                 let fecha = new Date()
+                 let mes = ''
+                 let dia = ''
+                 if(fecha.getMonth()>=10){
+                   mes = fecha.getMonth()
+                 }else{
+                   mes = '0' + fecha.getMonth()
+                 }
+                 if(fecha.getDay()>=10){
+                   dia = fecha.getDay()
+                 }else{
+                   dia = '0' + fecha.getDay()
+                 }
+                 fecha=  dia + '/' + mes + '/' + fecha.getFullYear()
 
                 tiquets.forEach(element => {
                     if(element.codigo==idTarea){
                         element.estado='resuelto'
+                        element.fechaResuelto = fecha
                     }
                 });
                 

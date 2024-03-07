@@ -10,15 +10,15 @@ import { setUsuaris, getUsuaris, lsGetDades, lsSetDades } from "./bd/usuaris.js"
 
 document.querySelector('header').innerHTML = header.template
 header.script()
-document.querySelector('main').innerHTML = login.template
-login.script()
-document.getElementById("botonLogin").className = "d-none";
 
 const botonRegistro = document.querySelector("#botonRegistro");
 botonRegistro.addEventListener("click", cargarRegistro);
 
 const botonLogin = document.querySelector("#botonLogin");
 botonLogin.addEventListener("click", cargarLogin);
+
+cargarLogin()
+
 
 lsSetDades(getUsuaris())
 
@@ -41,9 +41,9 @@ export function cargarRegistro(){
 
 
 function cargarLogin(){
-  event.preventDefault();
   document.querySelector('main').innerHTML = login.template
   login.script()
+  
   botonRegistro.removeEventListener("click", cargarRegistro);
   botonRegistro.removeEventListener("click", cargarLogin);
   botonRegistro.addEventListener("click", cargarRegistro);
@@ -51,6 +51,7 @@ function cargarLogin(){
   document.getElementById("botonRegistro").className = "btn btn-secondary ms-2";
   document.getElementById("botonPanel").className = "d-none";
   document.getElementById("botonCerrarSesion").className =  "d-none";
+  
   
 }
 

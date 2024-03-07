@@ -80,6 +80,7 @@ export const comentarios = {
         const formulario = document.querySelector("form")
         //Detectamos su evento submit (enviar)
         formulario.addEventListener("submit", (event) => {
+          console.log('a')
           //Comprobamos si el formulario no valida 
           if (!formulario.checkValidity()) {
             //Detenemos el evento enviar (submit)

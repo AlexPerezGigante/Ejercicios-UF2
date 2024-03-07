@@ -1,4 +1,5 @@
-import { lsGetDades, lsSetDades, setTiquets } from "../bd/tiquets"
+import { lsGetDades, lsSetDades, setTiquets, setCont, getCont} from "../bd/tiquets"
+import { comentarios } from "./comentarios"
 import { panel } from "./panel"
 
 let html = ''
@@ -15,21 +16,33 @@ html += `
       <div class="d-flex col-12 ">
           <div class="col-4">
               <label for="aula" class="form-label">Aula:</label> 
-              <input type="text" class="form-control w-100 aula">
+              <input required id="aula" type="text" class="form-control w-100 aula">
+              <div class="invalid-feedback">
+              Este campo no puede estar vacío!
+            </div>
           </div>
           <div class="col-4 mx-1">
               <label for="grupo" class="form-label">Grupo:</label> 
-              <input type="text" class="form-control w-100 grupo">
+              <input required id="grupo" type="text" class="form-control w-100 grupo">
+              <div class="invalid-feedback">
+              Este campo no puede estar vacío!
+            </div>
           </div>
           <div class="col-4">
               <label for="ordenador" class="form-label">Ordenador:</label> 
-              <input type="text" class="form-control w-100 ordenador">
+              <input required id="ordenador" type="text" class="form-control w-100 ordenador">
+              <div class="invalid-feedback">
+              Este campo no puede estar vacío!
+            </div>
           </div>
       </div>
-      
-
+    
       <label for="descripcion" class="form-label">Descripción:</label> 
-      <input type="text" class="form-control descripcion">
+      <input required id="descricion" type="text" class="form-control descripcion">
+      <div class="invalid-feedback">
+      Este campo no puede estar vacío!
+    </div>
+
       <button type="submit" class="btn btn-success ms-auto botonAgregarComentario">Añadir ticket</button>
       </form>
     </div>
@@ -43,6 +56,8 @@ export const nuevoTicket = {
     script:()=>{
 
         const eventoBody = document.querySelector('body')
+
+        let i = 0
         const funcion = (e) => {
 
         if(e.target.classList.contains('botonVolver')){
@@ -56,7 +71,6 @@ export const nuevoTicket = {
   //Detectamos su evento submit (enviar)
   formulario.addEventListener("submit", (event) => {
     event.preventDefault()
-    console.log('form')
     //Comprobamos si el formulario no valida 
     if (!formulario.checkValidity()) {
       //Detenemos el evento enviar (submit)
@@ -66,15 +80,21 @@ export const nuevoTicket = {
     formulario.classList.add('was-validated')
     }else{
       
-      const inputFecha = document.querySelector('.inputFecha')
       let fecha = new Date()
-      console.log(fecha)
-      fecha = fecha + ''
-      fecha = fecha.split('T')
-      fecha = fecha[0].split('-')
-      fecha = fecha[2] + '/' + fecha[1] + '/' + fecha[0]
+      let mes = ''
+      let dia = ''
+      if(fecha.getMonth()>=10){
+        mes = fecha.getMonth()
+      }else{
+        mes = '0' + fecha.getMonth()
+      }
+      if(fecha.getDay()>=10){
+        dia = fecha.getDay()
+      }else{
+        dia = '0' + fecha.getDay()
+      }
+      fecha=  dia + '/' + mes + '/' + fecha.getFullYear()
       
-
       let correo = document.querySelector('#correo').innerText
 
       const usuarios = lsGetUsuarios()
@@ -91,35 +111,51 @@ export const nuevoTicket = {
 
     
 
-      const inputDescripcion = document.querySelector('.descripcion')
-      const descripcion = inputDescripcion.value
-      inputDescripcion.value = ''
+      
+      if(i==0){
+        const inputAula = document.querySelector('.aula')
+        const aula = inputAula.value.toUpperCase()
+  
+        const inputDescripcion = document.querySelector('.descripcion')
+        const descripcion = inputDescripcion.value
+  
+        const inputGrupo = document.querySelector('.grupo')
+        const grupo = inputGrupo.value.toUpperCase()
+  
+        const inputOrdenador = document.querySelector('.ordenador')
+        const ordenador = inputOrdenador.value.toUpperCase()
 
-      const inputAula = document.querySelector('.aula')
-      const aula = inputAula.value.toUpperCase()
-      inputAula.value = ''
+        const cont = getCont()
 
-      const inputGrupo = document.querySelector('.descripcion')
-      const grupo = inputGrupo.value.toUpperCase()
-      inputGrupo.value = ''
+        setCont(cont+1)
+  
+        const objTicket = {
+          codigo: cont+1,
+          fechaCreado: fecha,
+          fechaResuelto: '',
+          aula: aula,
+          grupo: grupo,
+          ordenador: ordenador,
+          descripcion: descripcion,
+          alumno: alumno,
+          estado: 'pendiente'
+       }
+  
+         const array = lsGetDades()
+         array.push(objTicket)
+         setTiquets(array)
+         lsSetDades(array)
+  
+         quitarEvento()
+         document.querySelector('main').innerHTML = panel.template
+         panel.script()
+      }
 
-      const inputOrdenador = document.querySelector('.ordenador')
-      const ordenador = inputOrdenador.value.toUpperCase()
-      inputOrdenador.value = ''
+      i=i+1
+      
+ 
 
-    //   const objComentario = {
-    //       "codigo": id,
-    //       "autor": autor,
-    //       "fecha": fecha,
-    //       "comentario": comentario
-    //   }
-
-    //   const array = lsGetDades()
-    //   array.push(objComentario)
-    //   setComentarios(array)
-    //   lsSetDades(array)
-
-    //   pintaComentarios()
+     
       
     }
     

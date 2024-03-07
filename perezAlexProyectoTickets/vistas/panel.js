@@ -65,7 +65,7 @@ html+= `
 export const panel = {
     template: html
     ,
-    script: () =>{
+    script: (rol) =>{
 
         lsSetDades(getTiquets())
         pintaTiquetsPendientes()
@@ -78,28 +78,47 @@ export const panel = {
             let html = ''
             const tiquets = lsGetDades()
             tiquets.forEach((element) => {
-                if(element.estado=='pendiente'){
+                if(rol=='administrador'){
+                    if(element.estado=='pendiente'){
+                        html +=`
+                        <tr>
+                        <td>${element.codigo}</td>
+                        <td>${element.fechaCreado}</td>
+                        <td>${element.aula}</td>
+                        <td>${element.grupo}</td>
+                        <td>${element.ordenador}</td>
+                        <td>${element.descripcion}</td>
+                        <td>${element.alumno}</td>
+                        <td><button data-incidenciaid=${element.codigo} class="btn btn-success botonResolver" title="Resolver ticket">Resolver</button></td>
+                        <td><button data-incidenciaid=${element.codigo} class="btn btn-warning botonEditar"  title="Añadir comentario"><i data-incidenciaid=${element.codigo} class="bi  bi-pencil botonEditar" ></i>
+                        </button>
+                        </td>
+                        <td><button data-incidenciaid=${element.codigo} class="btn btn-info botonComentario" title="Ver comentarios"><i data-incidenciaid=${element.codigo} class="bi bi-chat-left-text botonComentario"></i>
+                        </button></td>
+                        <td><button data-incidenciaid=${element.codigo} class="btn btn-danger botonBorrar" title="Eliminar ticket"><i data-incidenciaid=${element.codigo} class="bi bi-trash3 botonBorrar"></i>
+                        </i>
+                        </button></td>
+                        </tr>
+                        `
+                    }
+                }else{
+                    if(element.estado=='pendiente'){
                     html +=`
-                    <tr>
-                    <td>${element.codigo}</td>
-                    <td>${element.fechaCreado}</td>
-                    <td>${element.aula}</td>
-                    <td>${element.grupo}</td>
-                    <td>${element.ordenador}</td>
-                    <td>${element.descripcion}</td>
-                    <td>${element.alumno}</td>
-                    <td><button data-incidenciaid=${element.codigo} class="btn btn-success botonResolver" title="Resolver ticket">Resolver</button></td>
-                    <td><button data-incidenciaid=${element.codigo} class="btn btn-warning botonEditar"  title="Añadir comentario"><i data-incidenciaid=${element.codigo} class="bi  bi-pencil botonEditar" ></i>
-                    </button>
-                    </td>
-                    <td><button data-incidenciaid=${element.codigo} class="btn btn-info botonComentario" title="Ver comentarios"><i data-incidenciaid=${element.codigo} class="bi bi-chat-left-text botonComentario"></i>
-                    </button></td>
-                    <td><button data-incidenciaid=${element.codigo} class="btn btn-danger botonBorrar" title="Eliminar ticket"><i data-incidenciaid=${element.codigo} class="bi bi-trash3 botonBorrar"></i>
-                    </i>
-                    </button></td>
-                    </tr>
-                    `
+                        <tr>
+                        <td>${element.codigo}</td>
+                        <td>${element.fechaCreado}</td>
+                        <td>${element.aula}</td>
+                        <td>${element.grupo}</td>
+                        <td>${element.ordenador}</td>
+                        <td>${element.descripcion}</td>
+                        <td>${element.alumno}</td>
+                        <td><button data-incidenciaid=${element.codigo} class="btn btn-info botonComentario" title="Ver comentarios"><i data-incidenciaid=${element.codigo} class="bi bi-chat-left-text botonComentario"></i>
+                        </button></td>
+                        </tr>
+                        `
+                    }
                 }
+                
             }),
 
             document.querySelector('#tiquetsPendientes').innerHTML = html
@@ -109,26 +128,47 @@ export const panel = {
             let html = ''
             const tiquets = lsGetDades()
             tiquets.forEach((element) => {
-                if(element.estado=='resuelto'){
-                    html+=`
-                    <tr>
-                    <td>${element.codigo}</td>
-                    <td>${element.fechaCreado}</td>
-                    <td>${element.fechaResuelto}</td>
-                    <td>${element.aula}</td>
-                    <td>${element.grupo}</td>
-                    <td>${element.ordenador}</td>
-                    <td>${element.descripcion}</td>
-                    <td>${element.alumno}</td>
-                    
-                    <td><button data-incidenciaid=${element.codigo} class="btn btn-info botonComentario" title="Ver comentarios"><i data-incidenciaid=${element.codigo} class="bi bi-chat-left-text botonComentario"></i>
-                    </button></td>
-                    <td><button data-incidenciaid=${element.codigo} class="btn btn-danger botonBorrar" title="Eliminar ticket"><i data-incidenciaid=${element.codigo} class="bi bi-trash3 botonBorrar"></i>
-                    </i>
-                    </button></td>
-                    </tr>
-                    `
+                if(rol=='administrador'){
+                    if(element.estado=='resuelto'){
+                        html+=`
+                        <tr>
+                        <td>${element.codigo}</td>
+                        <td>${element.fechaCreado}</td>
+                        <td>${element.fechaResuelto}</td>
+                        <td>${element.aula}</td>
+                        <td>${element.grupo}</td>
+                        <td>${element.ordenador}</td>
+                        <td>${element.descripcion}</td>
+                        <td>${element.alumno}</td>
+                        
+                        <td><button data-incidenciaid=${element.codigo} class="btn btn-info botonComentario" title="Ver comentarios"><i data-incidenciaid=${element.codigo} class="bi bi-chat-left-text botonComentario"></i>
+                        </button></td>
+                        <td><button data-incidenciaid=${element.codigo} class="btn btn-danger botonBorrar" title="Eliminar ticket"><i data-incidenciaid=${element.codigo} class="bi bi-trash3 botonBorrar"></i>
+                        </i>
+                        </button></td>
+                        </tr>
+                        `
+                    }
+                }else{
+                    if(element.estado=='resuelto'){
+                        html+=`
+                        <tr>
+                        <td>${element.codigo}</td>
+                        <td>${element.fechaCreado}</td>
+                        <td>${element.fechaResuelto}</td>
+                        <td>${element.aula}</td>
+                        <td>${element.grupo}</td>
+                        <td>${element.ordenador}</td>
+                        <td>${element.descripcion}</td>
+                        <td>${element.alumno}</td>
+                        
+                        <td><button data-incidenciaid=${element.codigo} class="btn btn-info botonComentario" title="Ver comentarios"><i data-incidenciaid=${element.codigo} class="bi bi-chat-left-text botonComentario"></i>
+                        </button></td>
+                        </tr>
+                        `
+                    }
                 }
+               
             });
 
             document.querySelector('#tiquetsResueltos').innerHTML = html
@@ -156,7 +196,7 @@ export const panel = {
             if(e.target.classList.contains('botonCrear')){
                 quitarEvento()
                 document.querySelector('main').innerHTML = nuevoTicket.template
-                nuevoTicket.script()
+                nuevoTicket.script(rol)
 
             }
             if(e.target.classList.contains('botonEditar')){
@@ -263,8 +303,8 @@ export const panel = {
                 // const bdElementoEditado = datosBd.filter((item)=>item.id == idTarea)
                 quitarEvento()
                 document.querySelector('main').innerHTML = comentarios.template
-                console.log(idTarea)
-                comentarios.script(idTarea)
+               
+                comentarios.script(idTarea, rol)
                
         
                 // pintarTareasPendientes(bdElementoBorrado)

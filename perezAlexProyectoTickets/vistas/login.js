@@ -85,7 +85,7 @@ export const login = {
             else{
                 alert("Bienvenido " + email)
 
-                    quitarEventoIniciar()
+                    
                     html+=email
                     document.querySelector("#correo").innerHTML=html
                     event.preventDefault();

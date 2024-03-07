@@ -37,6 +37,8 @@ export const registro = {
     script: () => { 
         const formulario = document.querySelector(".formRegistro")
         formulario.addEventListener("submit", (event) => {
+            const menseja = 'Este campo no puede estar vacío!'
+            document.querySelector('.email').innerHTML = menseja
             event.preventDefault()
           //Comprobamos si el formulario no valida 
           if (!formulario.checkValidity()) {
@@ -62,13 +64,25 @@ export const registro = {
             
             const array = usuaris.filter((e)=> e.email == registro.email)
 
-            if(array.lenght>0){
-            const menseja = 'Ya hay una cuenta asociada a este correo'
-            document.querySelector('.email').innerHTML = menseja
-            formulario.classList.add('was-validated')
+            if(array.length>0){
+                formulario.classList.remove('was-validated')
+                inputEmail.value = ''
+                let menseja = 'Ya hay una cuenta asociada a este correo'
+                document.querySelector('.email').innerHTML = menseja
+                if (!formulario.checkValidity()) {
+                    //Detenemos el evento enviar (submit)
+                    event.preventDefault()
+                    event.stopPropagation()
+                    //Y añadimos la clase 'was-validate' para que se muestren los mensajes
+                  formulario.classList.add('was-validated')
+                }
+                
+                
+                
+
             }else{
+                
                 usuaris.push(registro)
-            
                 setUsuaris(usuaris)
                 lsSetDades(usuaris)
                 alert("Usuario "+ inputEmail.value + " creado correctamente! ")

@@ -127,7 +127,7 @@ export const comentarios = {
             array.push(objComentario)
             setComentarios(array)
             lsSetDades(array)
-
+            
             pintaComentarios()
             
           }

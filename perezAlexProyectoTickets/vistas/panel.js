@@ -348,15 +348,15 @@ export const panel = {
                  let fecha = new Date()
                  let mes = ''
                  let dia = ''
-                 if(fecha.getMonth()>=10){
-                   mes = fecha.getMonth()
+                 if((fecha.getMonth()+1)>=10){
+                   mes = (fecha.getMonth()+1)
                  }else{
-                   mes = '0' + fecha.getMonth()
+                   mes = '0' + (fecha.getMonth()+1)
                  }
-                 if(fecha.getDay()>=10){
-                   dia = fecha.getDay()
+                 if(fecha.getDate()>=10){
+                   dia = fecha.getDate()
                  }else{
-                   dia = '0' + fecha.getDay()
+                   dia = '0' + fecha.getDate()
                  }
                  fecha=  dia + '/' + mes + '/' + fecha.getFullYear()
 

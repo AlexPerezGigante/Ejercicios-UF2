@@ -18,12 +18,7 @@ html += `
         <div class="invalid-feedback">
           Este campo no puede estar vacío!
         </div>
-        <label for="fecha" class="form-label me-2 mt-3">Fecha: </label>
-        <div class="d-flex align-items-center">
-          <input required type="datetime-local" class="form-control w-25 inputFecha">
-          <div class="invalid-feedback">
-            Este campo no puede estar vacío!
-          </div>
+        <div class="mt-2 d-flex align-items-center">
           <button type="submit" class="btn btn-success ms-auto botonAgregarComentario">Añadir comentario</button>
         </div>
       </form>
@@ -89,13 +84,20 @@ export const comentarios = {
           formulario.classList.add('was-validated')
           }else{
             
-            const inputFecha = document.querySelector('.inputFecha')
-            let fecha = inputFecha.value
-            fecha = fecha + ''
-            fecha = fecha.split('T')
-            fecha = fecha[0].split('-')
-            fecha = fecha[2] + '/' + fecha[1] + '/' + fecha[0]
-            inputFecha.value = ''
+            let fecha = new Date()
+            let mes = ''
+            let dia = ''
+            if((fecha.getMonth()+1)>=10){
+              mes = (fecha.getMonth()+1)
+            }else{
+              mes = '0' + (fecha.getMonth()+1)
+            }
+            if(fecha.getDate()>=10){
+              dia = fecha.getDate()
+            }else{
+              dia = '0' + fecha.getDate()
+            }
+            fecha=  dia + '/' + mes + '/' + fecha.getFullYear()
 
             let correo = document.querySelector('#correo').innerText
 

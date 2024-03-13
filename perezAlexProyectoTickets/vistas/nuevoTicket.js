@@ -1,4 +1,4 @@
-import { lsGetDades, lsSetDades, setTiquets, setCont, getCont} from "../bd/tiquets"
+
 import { comentarios } from "./comentarios"
 import { panel } from "./panel"
 
@@ -123,10 +123,15 @@ export const nuevoTicket = {
   
         const inputOrdenador = document.querySelector('.ordenador')
         const ordenador = inputOrdenador.value.toUpperCase()
+        let cont = ''
+        if(lsGetTickets() == null){
+          let cont = 1
+        }else{
+          const long = lsGetTickets()
+          cont = long.length
+        }
 
-        const cont = getCont()
-
-        setCont(cont+1)
+         
   
         const objTicket = {
           codigo: cont+1,
@@ -139,11 +144,17 @@ export const nuevoTicket = {
           alumno: alumno,
           estado: 'pendiente'
        }
-  
-         const array = lsGetDades()
-         array.push(objTicket)
-         setTiquets(array)
-         lsSetDades(array)
+       let array = ''
+       if(lsGetTickets() == null){
+         array = []
+      }else{
+         array = lsGetTickets()
+        console.log(array)
+        
+      }
+      array.push(objTicket)
+         
+         lsSetTickets(array)
   
          quitarEvento()
 
@@ -183,5 +194,18 @@ export const nuevoTicket = {
         function ponerEvento(){
             eventoBody.addEventListener('click', funcion)
         }
+
+        function lsSetTickets(dades){
+          const tickets = JSON.stringify(dades)
+          localStorage.setItem('tickets_Dades', tickets)
+          return(true)
+      }
+      
+      // Esta función lee el localStorage devuelve un onbjeto JSON
+      function lsGetTickets(){
+          const textoLocal = localStorage.getItem('tickets_Dades')
+          const dades = JSON.parse(textoLocal)
+          return(dades)
+      }
     }
 }

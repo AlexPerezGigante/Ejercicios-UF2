@@ -1,4 +1,3 @@
-import { lsGetDades } from "../bd/usuaris";
 import { cargarRegistro } from "../main";
 import { panel } from "./panel";
 import { nuevoTicket } from "./nuevoTicket";
@@ -41,25 +40,37 @@ export const login = {
             </div>
     `,
     script: () => {
-        console.log('Inyectamos login')
-        const formulario = document.querySelector(".formInicio")
-        //Detectamos su evento submit (enviar)
-        formulario.addEventListener("submit", (event) => {
-            event.preventDefault()
-          //Comprobamos si el formulario no valida 
-          if (!formulario.checkValidity()) {
-            //Detenemos el evento enviar (submit)
-            event.preventDefault()
-            event.stopPropagation()
-            //Y añadimos la clase 'was-validate' para que se muestren los mensajes
-          formulario.classList.add('was-validated')
-          }else{
-            iniciarSesion()
-          }
-        })
+        if (localStorage.getItem("usuario_log") === null) {
+            if(lsGetUsuarios()==null){
+                console.log('null')
+                llamaRegistro()
+            }else{
+                console.log('Inyectamos login')
+                const formulario = document.querySelector(".formInicio")
+                //Detectamos su evento submit (enviar)
+                formulario.addEventListener("submit", (event) => {
+                    event.preventDefault()
+                //Comprobamos si el formulario no valida 
+                if (!formulario.checkValidity()) {
+                    //Detenemos el evento enviar (submit)
+                    event.preventDefault()
+                    event.stopPropagation()
+                    //Y añadimos la clase 'was-validate' para que se muestren los mensajes
+                formulario.classList.add('was-validated')
+                }else{
+                    iniciarSesion()
+                }
+                })
 
-        const botonRegistro = document.querySelector('.botonRegistro')
-        botonRegistro.addEventListener('click', llamaRegistro)
+                const botonRegistro = document.querySelector('.botonRegistro')
+                botonRegistro.addEventListener('click', llamaRegistro)
+            }
+            
+        }else{
+            const object = lsGetLogin()
+            cargarSesion(object)
+        }
+        
         
         function iniciarSesion () {
             console.log('iniciando sesion')
@@ -67,14 +78,14 @@ export const login = {
             const email= inputEmail.value
             const inputPass = document.querySelector("#pass");
             const pass=inputPass.value
-            let html=''
+            event.preventDefault();
             let error=1
-            let rol = ''
-            lsGetDades().forEach(element => {
+            let elemento = ''
+            lsGetUsuarios().forEach(element => {
                 if(email == element.email){
                     if(pass == element.password){
                         error=0
-                        rol=element.rol
+                        elemento=element
                     }
                 }
             });
@@ -83,30 +94,46 @@ export const login = {
                 
             }
             else{
-                alert("Bienvenido " + email)
-
-                    
-                    html+=email
-                    document.querySelector("#correo").innerHTML=html
-                    event.preventDefault();
-
-                    if(rol=='alumno'){
-                        document.querySelector('main').innerHTML = nuevoTicket.template
-                        nuevoTicket.script(rol) 
-                        document.querySelector(".botonVolver").className = "d-none"
-                    }else{
-                        document.querySelector('main').innerHTML = panel.template
-                        panel.script(rol)
-                    }
-                    document.getElementById("botonLogin").className = " btn btn-secondary ms-2";
-                    document.getElementById("botonRegistro").className = "btn btn-secondary ms-2";
-                    document.getElementById("botonPanel").className = "d-none";
-                    document.getElementById("botonCerrarSesion").className =  "btn btn-secondary ms-2";
-                    
-                  
+                cargarSesion(elemento)  
             }
         }
-        
+        function lsSetLogin(object){
+            const usuarioLog = JSON.stringify(object)
+            localStorage.setItem('usuario_log', usuarioLog)
+            return(true)
+        }
+
+        function lsGetLogin(){
+            const textoLocal = localStorage.getItem('usuario_log')
+            const dades = JSON.parse(textoLocal)
+            return(dades)
+        }
+
+        function cargarSesion(object){
+            alert("Bienvenido " + object.email)
+            let html=''
+            html+=object.email
+            document.querySelector("#correo").innerHTML=html
+
+            lsSetLogin(object)
+
+            document.getElementById("botonLogin").className = " btn btn-secondary ms-2";
+            document.getElementById("botonRegistro").className = "btn btn-secondary ms-2";
+            document.getElementById("botonPanel").className = "d-none";
+            document.getElementById("botonCerrarSesion").className =  "btn btn-secondary ms-2";
+
+            if(object.rol=='alumno'){
+                document.querySelector('main').innerHTML = nuevoTicket.template
+                nuevoTicket.script(object.rol) 
+                document.querySelector(".botonVolver").className = "d-none"
+            }else{
+                document.querySelector('main').innerHTML = panel.template
+                panel.script(object.rol)
+            }
+            
+
+        }
+
         function llamaRegistro(){
             quitarEventoRegistro
             cargarRegistro()
@@ -117,7 +144,15 @@ export const login = {
         }
        
        
-        
+         // Esta función agrega a localStorage un objeto.
+ 
+
+// Esta función lee el localStorage devuelve un onbjeto JSON
+function lsGetUsuarios(){
+    const textoLocal = localStorage.getItem('usuaris_Dades')
+    const dades = JSON.parse(textoLocal)
+    return(dades)
+}
             
         
     }

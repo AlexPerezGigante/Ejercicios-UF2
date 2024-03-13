@@ -3,7 +3,7 @@ import { panel } from "./vistas/panel.js";
 import { registro } from "./vistas/registre.js";
 import { login } from "./vistas/login.js";
 import { header } from "./vistas/header.js";
-import { setUsuaris, getUsuaris, lsGetDades, lsSetDades } from "./bd/usuaris.js";
+
 
 
 
@@ -20,10 +20,10 @@ botonLogin.addEventListener("click", cargarLogin);
 cargarLogin()
 
 
-lsSetDades(getUsuaris())
+
 
 export function cargarRegistro(){
-  event.preventDefault();
+
   document.querySelector('main').innerHTML = registro.template
   registro.script()
   
@@ -41,7 +41,7 @@ export function cargarRegistro(){
 
 function cargarLogin(){
   document.querySelector('main').innerHTML = login.template
-  login.script()
+  
   
   botonRegistro.removeEventListener("click", cargarRegistro);
   botonRegistro.removeEventListener("click", cargarLogin);
@@ -50,7 +50,8 @@ function cargarLogin(){
   document.getElementById("botonRegistro").className = "btn btn-secondary ms-2";
   document.getElementById("botonPanel").className = "d-none";
   document.getElementById("botonCerrarSesion").className =  "d-none";
-  
+  localStorage.removeItem("usuario_log");
+  login.script()
   
 }
 
@@ -60,7 +61,7 @@ botonPanel.addEventListener("click", cargarPanel);
 document.getElementById("botonPanel").className = "d-none";
 
 function cargarPanel(){
-  event.preventDefault();
+  
   document.querySelector('main').innerHTML = panel.template
   panel.script()
   document.getElementById("botonLogin").className = " btn btn-secondary ms-2";
@@ -77,5 +78,6 @@ botonCerrarSesion.addEventListener("click", cerrarSesion);
 function cerrarSesion(){
   document.querySelector("#correo").innerHTML= ''
   alert("Sesión cerrada correctamente!")
+  localStorage.removeItem("usuario_log");
   cargarLogin()
 }

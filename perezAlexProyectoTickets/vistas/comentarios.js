@@ -1,4 +1,3 @@
-import { setComentarios, getComentarios, lsSetDades, lsGetDades } from "../bd/comentarios"
 import { panel } from "./panel"
 
 
@@ -36,15 +35,20 @@ export const comentarios = {
     template: html
     ,
     script:(id, rol)=>{
-        lsSetDades(getComentarios())
+        if(lsGetComentarios() == null){
+
+        }else{
+          pintaComentarios()
+        }
+      
         const eventoBody = document.querySelector('body')
-        pintaComentarios()
+        
         
 
         function pintaComentarios(){
             let html = ''
             
-            const comentarios = lsGetDades()
+            const comentarios = lsGetComentarios()
 
             comentarios.forEach(element => {
                 if(element.codigo == id){
@@ -75,6 +79,7 @@ export const comentarios = {
         const formulario = document.querySelector("form")
         //Detectamos su evento submit (enviar)
         formulario.addEventListener("submit", (event) => {
+          event.preventDefault()
           //Comprobamos si el formulario no valida 
           if (!formulario.checkValidity()) {
             //Detenemos el evento enviar (submit)
@@ -99,19 +104,16 @@ export const comentarios = {
             }
             fecha=  dia + '/' + mes + '/' + fecha.getFullYear()
 
-            let correo = document.querySelector('#correo').innerText
-
-            const usuarios = lsGetUsuarios()
             
-            function lsGetUsuarios(){
-              const textoLocal = localStorage.getItem('usuaris_Dades')
+
+            const usuario = lsGetLogin()
+            
+            function lsGetLogin(){
+              const textoLocal = localStorage.getItem('usuario_log')
               const dades = JSON.parse(textoLocal)
               return(dades)
           }
           
-          const bdElemento = usuarios.filter((item)=>item.email == correo)
-
-          const autor = bdElemento[0].nombre
 
           
             const inputComentario = document.querySelector('.inputComentario')
@@ -120,15 +122,20 @@ export const comentarios = {
 
             const objComentario = {
                 "codigo": id,
-                "autor": autor,
+                "autor": usuario.nombre,
                 "fecha": fecha,
                 "comentario": comentario
             }
             
-            const array = lsGetDades()
+            let array = ''
+            if(lsGetComentarios()==null){
+              array = []
+            }else{
+              array = lsGetComentarios()
+            }
+            
             array.push(objComentario)
-            setComentarios(array)
-            lsSetDades(array)
+            lsSetComentarios(array)
             
             pintaComentarios()
             
@@ -151,5 +158,19 @@ export const comentarios = {
         function ponerEvento(){
             eventoBody.addEventListener('click', funcion)
         }
+
+         // Esta función agrega a localStorage un objeto.
+ function lsSetComentarios(dades){
+  const comentarios = JSON.stringify(dades)
+  localStorage.setItem('comentarios_Dades', comentarios)
+  return(true)
+}
+
+// Esta función lee el localStorage devuelve un onbjeto JSON
+ function lsGetComentarios(){
+  const textoLocal = localStorage.getItem('comentarios_Dades')
+  const dades = JSON.parse(textoLocal)
+  return(dades)
+}
     }
 }

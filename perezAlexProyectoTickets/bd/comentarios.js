@@ -33,16 +33,3 @@ export function setComentarios(array){
     return comentarios
  }
  
- // Esta función agrega a localStorage un objeto.
- export function lsSetDades(dades){
-     const comentarios = JSON.stringify(dades)
-     localStorage.setItem('comentarios_Dades', comentarios)
-     return(true)
- }
- 
- // Esta función lee el localStorage devuelve un onbjeto JSON
- export function lsGetDades(){
-     const textoLocal = localStorage.getItem('comentarios_Dades')
-     const dades = JSON.parse(textoLocal)
-     return(dades)
- }

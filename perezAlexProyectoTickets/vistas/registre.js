@@ -1,4 +1,4 @@
-import { lsGetDades, lsSetDades, setUsuaris, getUsuaris } from "../bd/usuaris.js";
+
 import { login } from "./login.js";
 
 
@@ -29,6 +29,15 @@ export const registro = {
                         <div class="invalid-feedback">
                             Contraseña de mínimo 6 carácteres
                         </div>
+                        <label  for="rol" class="form-label mt-3">Rol:</label>
+                        <select required name="rol" id="rol" class="form-control">
+                            <option value="alumno">Alumno</option>
+                            <option value="profesor">Profesor</option>
+                            <option value="administrador">Administrador</option>
+                        </select>
+                        <div class="invalid-feedback">
+                                Selecciona una opción
+                        </div>
                         <button type="submit" class="btn btn-primary w-100 mt-3" id="botonEnviarRegistro" >Enviar</button>
                     </form>
                 </div>
@@ -52,44 +61,59 @@ export const registro = {
             const inputApellido = document.querySelector('#apellidos')
             const inputEmail = document.querySelector("#email");
             const inputPass = document.querySelector("#pass");
+            const selectRol = document.querySelector('#rol')
            
             const registro = {
                 nombre: inputNombre.value,
                 apellidos: inputApellido.value,
                 email: inputEmail.value ,
                 password: inputPass.value,
-                rol:"alumno"
+                rol:selectRol.value
             }
-            const usuaris = lsGetDades()
-            
-            const array = usuaris.filter((e)=> e.email == registro.email)
+            let usuaris = ''
+            if(lsGetUsuarios()==null){
+                usuaris = []
 
-            if(array.length>0){
-                formulario.classList.remove('was-validated')
-                inputEmail.value = ''
-                let menseja = 'Ya hay una cuenta asociada a este correo'
-                document.querySelector('.email').innerHTML = menseja
-                if (!formulario.checkValidity()) {
-                    //Detenemos el evento enviar (submit)
-                    event.preventDefault()
-                    event.stopPropagation()
-                    //Y añadimos la clase 'was-validate' para que se muestren los mensajes
-                  formulario.classList.add('was-validated')
-                }
-                
-                
-                
-
-            }else{
-                
                 usuaris.push(registro)
-                setUsuaris(usuaris)
-                lsSetDades(usuaris)
-                alert("Usuario "+ inputEmail.value + " creado correctamente! ")
+                    lsSetLogin(registro)
+                    lsSetUsuarios(usuaris)
+                    alert("Usuario "+ inputEmail.value + " creado correctamente! ")
+        
+                    document.querySelector('main').innerHTML = login.template
+                    login.script()
+            }else{
+                usuaris = lsGetUsuarios()
+            
+                const array = usuaris.filter((e)=> e.email == registro.email)
     
-                document.querySelector('main').innerHTML = login.template
-                login.script()
+                if(array.length>0){
+                    formulario.classList.remove('was-validated')
+                    inputEmail.value = ''
+                    let menseja = 'Ya hay una cuenta asociada a este correo'
+                    document.querySelector('.email').innerHTML = menseja
+                    if (!formulario.checkValidity()) {
+                        //Detenemos el evento enviar (submit)
+                        event.preventDefault()
+                        event.stopPropagation()
+                        //Y añadimos la clase 'was-validate' para que se muestren los mensajes
+                      formulario.classList.add('was-validated')
+                    }
+                    
+                    
+                    
+    
+                }else{
+                    
+                    usuaris.push(registro)
+                    lsSetLogin(registro)
+                    lsSetUsuarios(usuaris)
+                    alert("Usuario "+ inputEmail.value + " creado correctamente! ")
+        
+                    document.querySelector('main').innerHTML = login.template
+                    login.script()
+                }
             }
+            
             
 
            
@@ -98,8 +122,25 @@ export const registro = {
         
        
 
+ // Esta función agrega a localStorage un objeto.
+ function lsSetUsuarios(dades){
+    const usuaris = JSON.stringify(dades)
+    localStorage.setItem('usuaris_Dades', usuaris)
+    return(true)
+}
 
-        
+// Esta función lee el localStorage devuelve un onbjeto JSON
+function lsGetUsuarios(){
+    const textoLocal = localStorage.getItem('usuaris_Dades')
+    const dades = JSON.parse(textoLocal)
+    return(dades)
+}
+ 
+function lsSetLogin(object){
+    const usuarioLog = JSON.stringify(object)
+    localStorage.setItem('usuario_log', usuarioLog)
+    return(true)
+}
         
     }
     

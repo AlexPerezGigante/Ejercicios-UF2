@@ -109,14 +109,14 @@ export function getTiquets(){
 }
 
 // Esta función agrega a localStorage un objeto.
-export function lsSetDades(dades){
+export function lsSetTickets(dades){
 	const tickets = JSON.stringify(dades)
 	localStorage.setItem('tickets_Dades', tickets)
 	return(true)
 }
 
 // Esta función lee el localStorage devuelve un onbjeto JSON
-export function lsGetDades(){
+export function lsGetTickets(){
 	const textoLocal = localStorage.getItem('tickets_Dades')
 	const dades = JSON.parse(textoLocal)
 	return(dades)

@@ -1,4 +1,4 @@
-import { setTiquets ,getTiquets, lsSetDades, lsGetDades  } from "../bd/tiquets.js"
+
 import { comentarios } from "./comentarios.js"
 import { nuevoTicket } from "./nuevoTicket.js"
 
@@ -67,16 +67,21 @@ export const panel = {
     ,
     script: (rol) =>{
 
-        lsSetDades(getTiquets())
-        pintaTiquetsPendientes()
-        pintaTiquetsResueltos()
+
+        if(lsGetTickets() == null){
+            
+        }else{
+            pintaTiquetsPendientes()
+            pintaTiquetsResueltos()
+        }
+        
         const eventoBody = document.querySelector('body')
         
         
 
         function pintaTiquetsPendientes(){
             let html = ''
-            const tiquets = lsGetDades()
+            const tiquets = lsGetTickets()
             tiquets.forEach((element) => {
                 if(rol=='administrador'){
                     if(element.estado=='pendiente'){
@@ -126,7 +131,7 @@ export const panel = {
 
         function pintaTiquetsResueltos(){
             let html = ''
-            const tiquets = lsGetDades()
+            const tiquets = lsGetTickets()
             tiquets.forEach((element) => {
                 if(rol=='administrador'){
                     if(element.estado=='resuelto'){
@@ -177,7 +182,7 @@ export const panel = {
         const funcion = (e) =>{
             // borrar tarea
             
-            const tiquets = lsGetDades()
+            const tiquets = lsGetTickets()
             if(e.target.classList.contains('botonBorrar')){
                 // console.log('borrar tarea', e.target.classList)
                 // const divTarea = e.target.dataset.incidenciaid
@@ -186,9 +191,8 @@ export const panel = {
                 const idTarea = e.target.dataset.incidenciaid
         
                 const bdElementoBorrado = tiquets.filter((item)=>item.codigo != idTarea)
-                console.log(bdElementoBorrado)
-                lsSetDades(bdElementoBorrado)
-                setTiquets(bdElementoBorrado)
+                
+                lsSetTickets(bdElementoBorrado)
                 pintaTiquetsPendientes()
                 pintaTiquetsResueltos()
                 
@@ -309,8 +313,7 @@ export const panel = {
 
                     bdElementoBorrado.push(obj)
 
-                    lsSetDades(bdElementoBorrado)
-                    setTiquets(bdElementoBorrado)
+                    lsSetTickets(bdElementoBorrado)
                     pintaTiquetsPendientes()
                     pintaTiquetsResueltos()
 
@@ -367,8 +370,8 @@ export const panel = {
                     }
                 });
                 
-                lsSetDades(tiquets)
-                setTiquets(tiquets)
+                lsSetTickets(tiquets)
+                
                 pintaTiquetsPendientes()
                 pintaTiquetsResueltos()
             }
@@ -389,5 +392,17 @@ export const panel = {
             eventoBody.addEventListener('click', funcion)
         }
         
+        function lsSetTickets(dades){
+            const tickets = JSON.stringify(dades)
+            localStorage.setItem('tickets_Dades', tickets)
+            return(true)
+        }
+        
+        // Esta función lee el localStorage devuelve un onbjeto JSON
+        function lsGetTickets(){
+            const textoLocal = localStorage.getItem('tickets_Dades')
+            const dades = JSON.parse(textoLocal)
+            return(dades)
+        }
     }
 }
